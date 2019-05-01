@@ -1,0 +1,2 @@
+* Notes May 1
+  ALC is smaller than ALCQ
