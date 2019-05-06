@@ -1,2 +1,5 @@
 * Notes May 1
   ALC is smaller than ALCQ
+* Notes May 6
+  description logics as predicate_names is problematic
+  can't reason between them

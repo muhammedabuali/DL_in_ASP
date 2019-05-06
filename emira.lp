@@ -1,6 +1,6 @@
 % init
-  description_logic(1..2).
-  modeling_feature(100..120).
+  % description_logic(1..100).
+  % modeling_feature(1..100).
   box(200..210).
   axiom(300..310).
   model_property(400..410).
@@ -65,24 +65,17 @@
   alc_modeling_feature(X):- value_restriction(X).
   alc_modeling_feature(X):- top_concept(X).
 
-  has_modeling_feature(X,A):- alc(X), alc_modeling_feature(A).
-  :- alc(X), not description_logic(X).
-  :- alc(X), has_modeling_feature(X,A),
-             not alc_modeling_feature(A).
 
+has_modeling_feature(X,A):- alc(X), alc_modeling_feature(A).
+-alc(X):- alc_modeling_feature(A), description_logic(X), not has_modeling_feature(X,A).
+alc(X):- not -alc(X), description_logic(X).
 % define ALCO
   alco_modeling_feature(X):- alc_modeling_feature(X).
   alco_modeling_feature(X):- nominals(X).
 
   has_modeling_feature(X,A):- alco(X), alco_modeling_feature(A).
-  :- alco(X), not description_logic(X).
-  :- alco(X), has_modeling_feature(X,A),
-     not alco_modeling_feature(A).
-
-% comparing logics
-  has_extra_features(X,Y):- has_modeling_feature(X,A), not has_modeling_feature(Y,A), description_logic(X), description_logic(Y), modeling_feature(A).
-  higher_logic(X,Y):- has_extra_features(X,Y), description_logic(X), description_logic(Y), X != Y.
-  :- higher_logic(X,Y), higher_logic(Y,X).
+  -alco(X):- alco_modeling_feature(A), description_logic(X), not has_modeling_feature(X,A).
+  alco(X):- not -alco(X), description_logic(X).
 
 % boxes
   box(X):- tbox(X).
@@ -117,18 +110,42 @@ model_property(X):- tree_model_property(X).
   reasoning_task(X):- abox_consistency(X).
   reasoning_task(X):- concept_satisfiability(X).
 
-  complexity_class(X):- in_exp_time(X).
-  complexity_class(X):- exp_time_hard(X).
+  in_complexity_class(X):- in_exp_time(X),
+  in_complexity_class(X):- in_p_space(X),
+  in_exp_time(X):- in_pspace(X).
+  %....
+  complexity_class_hard(X):- exp_time_hard(X).
+  complexity_class_hard(X):- pspace_hard(X).
+  exp_time_hard(X):- p_space_hard(X).
+  %....
 
 % DL Complexities
 % has_complexity(X,T,B,C1,C2)
 :- has_complexity(X,_,_,_,_), not description_logic(X).
-:- has_complexity(_,T,_,_,_), not box(T).
+:- has_complexity(_,T,_,_,_), not reasoning_task(T).
+:- has_complexity(_,_,B,_,_), not box(B).
+:- has_complexity(_,_,_,C1,_), not in_complexity_class(C1).
+:- has_complexity(_,_,_,_,C2), not complexity_class_hard(C2).
 has_complexity(X,T,B,C1,C2):- alc(X), concept_satisfiability(T),
                           general_tbox(B), in_exp_time(C1), exp_time_hard(C2).
+                          has_complexity(X1,T,B,C1,C2), 
 
-% testing
-  alco(1).
-  alc(2).
-  #show higher_logic/2.
-  #show has_extra_features/2.
+% testing containment
+  % t :- description_logic(X), alc(X), not alco(X).
+  % f :- description_logic(X), alco(X), not alc(X).
+  % alco(1).
+  % alc(2).
+  % #show.
+  % #show alco/1.
+  % #show t/0.
+  % #show f/0.
+  % #show alc/1.
+
+% testing logic defintion
+  % description_logic(1).
+  % has_modeling_feature(1, A):- alco_modeling_feature(A).
+  % #show.
+  % #show alc/1.
+  % #show alco/1.
+
+#show.
