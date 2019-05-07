@@ -1,9 +1,9 @@
 % init
   % description_logic(1..100).
   % modeling_feature(1..100).
-  box(200..210).
-  axiom(300..310).
-  model_property(400..410).
+  % box(200..210).
+  % axiom(300..310).
+  % model_property(400..410).
   description_logic(X):- alc(X).
   description_logic(X):- alco(X).
 
@@ -20,6 +20,7 @@
   modeling_feature(X):- role_inverse(X).
   modeling_feature(X):- role_transitivity(X).
   modeling_feature(X):- conjunction(X).
+  modeling_feature(X):- disjunction(X).
   modeling_feature(X):- value_restriction(X).
   modeling_feature(X):- role_chain(X).
   modeling_feature(X):- role_inclusion(X).
@@ -54,6 +55,7 @@
   nominals(119).
   qualified_number_restriction(120).
   unqualified_number_restriction(121).
+  disjunction(122).
 
 % define ALC
   alc_modeling_feature(X):- atomic_concept(X).
@@ -110,8 +112,8 @@ model_property(X):- tree_model_property(X).
   reasoning_task(X):- abox_consistency(X).
   reasoning_task(X):- concept_satisfiability(X).
 
-  in_complexity_class(X):- in_exp_time(X),
-  in_complexity_class(X):- in_p_space(X),
+  in_complexity_class(X):- in_exp_time(X).
+  in_complexity_class(X):- in_p_space(X).
   in_exp_time(X):- in_pspace(X).
   %....
   complexity_class_hard(X):- exp_time_hard(X).
@@ -119,27 +121,29 @@ model_property(X):- tree_model_property(X).
   exp_time_hard(X):- p_space_hard(X).
   %....
 
-% DL Complexities
-% has_complexity(X,T,B,C1,C2)
-:- has_complexity(X,_,_,_,_), not description_logic(X).
-:- has_complexity(_,T,_,_,_), not reasoning_task(T).
-:- has_complexity(_,_,B,_,_), not box(B).
-:- has_complexity(_,_,_,C1,_), not in_complexity_class(C1).
-:- has_complexity(_,_,_,_,C2), not complexity_class_hard(C2).
-has_complexity(X,T,B,C1,C2):- alc(X), concept_satisfiability(T),
-                          general_tbox(B), in_exp_time(C1), exp_time_hard(C2).
-                          has_complexity(X1,T,B,C1,C2), 
+ % DL Complexities
+ % has_complexity(X,T,B,C1,C2)
+ :- has_complexity(X,_,_,_,_), not description_logic(X).
+ :- has_complexity(_,T,_,_,_), not reasoning_task(T).
+ :- has_complexity(_,_,B,_,_), not box(B).
+ :- has_complexity(_,_,_,C1,_), not in_complexity_class(C1).
+ :- has_complexity(_,_,_,_,C2), not complexity_class_hard(C2).
+ has_complexity(X,T,B,C1,C2):- alc(X), concept_satisfiability(T),
+                           general_tbox(B), in_exp_time(C1), exp_time_hard(C2).
 
 % testing containment
-  % t :- description_logic(X), alc(X), not alco(X).
-  % f :- description_logic(X), alco(X), not alc(X).
-  % alco(1).
-  % alc(2).
-  % #show.
-  % #show alco/1.
-  % #show t/0.
-  % #show f/0.
-  % #show alc/1.
+   t :- description_logic(X), alc(X), not alco(X).
+   f :- description_logic(X), alco(X), not alc(X).
+   alc_is_alco :- alco(X): alc(X).
+   alco_is_alc :- alc(X): alco(X).
+   alco(1).
+   alc(2).
+   #show alco/1.
+   #show t/0.
+   #show f/0.
+   #show alc_is_alco/0.
+   #show alco_is_alc/0.
+   #show alc/1.
 
 % testing logic defintion
   % description_logic(1).
@@ -147,5 +151,6 @@ has_complexity(X,T,B,C1,C2):- alc(X), concept_satisfiability(T),
   % #show.
   % #show alc/1.
   % #show alco/1.
+
 
 #show.
