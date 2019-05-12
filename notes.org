@@ -10,3 +10,5 @@
   need to differentiate between logics and how properties don't transfer
   have one stable model for the base model
   having description logics as constants
+* May 12
+  heirarchy can be made by implementing partial order relations

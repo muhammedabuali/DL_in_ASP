@@ -25,7 +25,7 @@
   modeling_feature(X):- role_chain(X).
   modeling_feature(X):- role_inclusion(X).
   concept_negation(X):- atomic_negation(X).
-  existential_quantification(X):- limited_existential_restriction(X).
+  existential_restriction(X):- limited_existential_restriction(X).
   concept_constructor(X):- functionality(X).
   concept_constructor(X):- nominals(X).
   concept_constructor(X):- qualified_number_restriction(X).
