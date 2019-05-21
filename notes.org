@@ -12,3 +12,20 @@
   having description logics as constants
 * May 12
   heirarchy can be made by implementing partial order relations
+* May 15
+  addition: taks_reduction
+  Query answering
+  modeling feature
+  start writing
+* May 20  
+  - unneeded rules of transitivity
+  - in_p_space ✓
+  - complexity and completeness
+  - higher_upper_bound
+  - no need to say not has_complexity
+  - data from navigator
+  - suggestions:
+    - separating facts and rules
+    - deriving features
+    - deriving properties, nominals -> tbox -> reasoning about complexities
+    - deriving reductions
