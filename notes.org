@@ -21,8 +21,8 @@
   - unneeded rules of transitivity
   - in_p_space ✓
   - complexity and completeness
-  - higher_upper_bound
-  - no need to say not has_complexity
+  - higher_upper_bound ✓
+  - no need to say not has_complexity ✓
   - data from navigator
   - suggestions:
     - separating facts and rules

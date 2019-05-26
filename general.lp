@@ -123,6 +123,16 @@ higher_lower_bound(X,Z):- higher_lower_bound(X,Y), higher_lower_bound(Y,Z),
 lower_bound(X), lower_bound(Y),
 lower_bound(Z).
 
+% complete classes
+% represents which higher and lower bounds are of the smae class
+same_class(in_p_time, p_time_hard, p_time).
+same_class(in_p_space, p_space_hard, p_space).
+same_class(in_exp_time, exp_time_hard, exp_time).
+is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C2),
+                              has_upper_bound(X,T,B,C1),
+                              same_class(C1,C2,C),
+                              description_logic(X), reasoning_task(T),
+                              box_type(B).
 %boxes
 box_type(general_t_box).
 % reasoning_tasks
@@ -185,5 +195,9 @@ has_highest_lower_bound(X,T,B,C1):- has_inferred_lower_bound(X,T,B,C1),
 % has_inferred_lower_bound(alcqi, concept_satisfiability, general_t_box, p_space_hard).
 % #show has_highest_lower_bound/4.
 
-% % output
+% test is_class_complete
+% has_lower_bound(alc,concept_satisfiability,general_t_box,exp_time_hard).
+% has_upper_bound(alc,concept_satisfiability,general_t_box, in_exp_time).
+% #show is_class_complete/4.
+
 #show .
