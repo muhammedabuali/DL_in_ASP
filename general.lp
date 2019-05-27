@@ -3,7 +3,11 @@ description_logic(alc;
                   alcq;
                   alcn;
                   alco;
+                  alci;
                   alcqi;
+                  alcqo;
+                  aclh;
+                  r;
                   s).
 % features
 modeling_feature(atomic_concept;
@@ -14,10 +18,15 @@ modeling_feature(atomic_concept;
                   conjunction;disjunction;
                   atomic_negation;nominals;
                   inverse_roles;transitive_roles;
+                  functionality;least_fix_point_op;
+                  role_heirarchy;complex_role_inclusion;
                   value_restriction;existential_restriction).
 
 %sub features
-sub_modeling_feature(( nominals ; qualified_number_restriction),concept_constructor).
+sub_modeling_feature(( nominals ; qualified_number_restriction;
+                       functionality; unqualified_number_restriction;
+                       least_fix_point_op),
+                       concept_constructor).
 sub_modeling_feature( unqualified_number_restriction,qualified_number_restriction).
 % transitivity
 sub_modeling_feature(X,Z):- sub_modeling_feature(X,Y),sub_modeling_feature(Y,Z).
@@ -31,37 +40,25 @@ has_modeling_feature(alc,( atomic_concept;bottom_concept;
                       concept_negation;existential_restriction;
                       disjunction;conjunction;value_restriction;
                       top_concept )).
-% define alc
-has_modeling_feature(s,( atomic_concept;bottom_concept;
-                      concept_negation;existential_restriction;
-                      disjunction;conjunction;value_restriction;
-                      transitive_roles;
-                      top_concept )).
+% define s
+has_modeling_feature(s,transitive_roles).
+has_modeling_feature(s,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
 % define alco
-has_modeling_feature(alco,( atomic_concept;bottom_concept;
-concept_negation;existential_restriction;
-disjunction;conjunction;value_restriction;
-top_concept;nominals )).
+has_modeling_feature(alco,nominals).
+has_modeling_feature(alco,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
 % define alcq
-has_modeling_feature(alcq,( atomic_concept;bottom_concept;
-concept_negation;existential_restriction;
-disjunction;conjunction;value_restriction;
-top_concept;qualified_number_restriction )).
+has_modeling_feature(alcq, qualified_number_restriction).
+has_modeling_feature(alcq,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
 % define alcn
-has_modeling_feature(alcn,( atomic_concept;bottom_concept;
-concept_negation;existential_restriction;
-disjunction;conjunction;value_restriction;
-top_concept;unqualified_number_restriction )).
+has_modeling_feature(alcn, unqualified_number_restriction).
+has_modeling_feature(alcn,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
 % define alcqi
-has_modeling_feature(alcqi,( atomic_concept;bottom_concept;
-concept_negation;existential_restriction;
-disjunction;conjunction;value_restriction;
-inverse_roles;
-top_concept;qualified_number_restriction )).
+has_modeling_feature(alcqi, qualified_number_restriction;inverse_roles).
+has_modeling_feature(alcqi, X):- has_modeling_feature(alc,X), modeling_feature(X).
 
 % comparing logic expressivity
 has_extra_features(X,Y):- has_modeling_feature(X,A),
@@ -134,30 +131,54 @@ is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C2),
                               description_logic(X), reasoning_task(T),
                               box_type(B).
 %boxes
+box_type(empty_t_box).
+box_type(acyclic_t_box).
 box_type(general_t_box).
+
 % reasoning_tasks
 reasoning_task(a_box_consistency;
                concept_satisfiability).
 
+% model properties
+has_model_properties(alc, finite_model).
+has_model_properties(alc, tree_model).
+
 % known complexities
-has_lower_bound(alc,concept_satisfiability,general_t_box,exp_time_hard).
-has_upper_bound(alc,concept_satisfiability,general_t_box,exp_time).
+has_lower_bound(alc, concept_satisfiability, empty_t_box, p_space_hard).
+has_upper_bound(alcq, concept_satisfiability, empty_t_box, in_p_space).
+has_lower_bound(alc, a_box_consistency, empty_t_box, p_space_hard).
+has_upper_bound(alcqo, a_box_consistency, empty_t_box, in_p_space).
+
 % has_inferred_lower_bound(alcn,concept_satisfiability,general_t_box,n_exp_time_hard).
 % inferred_complexities
-has_inferred_lower_bound(Y,T,B,C1):- has_lower_bound(X,T,B,C1), higher_logic(Y,X),
-                                        % Domains
-                                        description_logic(X), description_logic(Y),
-                                        reasoning_task(T), box_type(B), lower_bound(C1).
+has_lower_bound(Y,T,B,C1):- has_lower_bound(X,T,B,C1), higher_logic(Y,X),
+                            % Domains
+                            description_logic(X), description_logic(Y),
+                            reasoning_task(T), box_type(B), lower_bound(C1).
 
--has_highest_lower_bound(X,T,B,C1):- has_inferred_lower_bound(X,T,B,C1),
-                                      has_inferred_lower_bound(X,T,B,D1),
+-has_highest_lower_bound(X,T,B,C1):- has_lower_bound(X,T,B,C1),
+                                      has_lower_bound(X,T,B,D1),
                                       higher_lower_bound(D1,C1), C1 != D1.
 
-has_highest_lower_bound(X,T,B,C1):- has_inferred_lower_bound(X,T,B,C1),
+has_highest_lower_bound(X,T,B,C1):- has_lower_bound(X,T,B,C1),
                                     not -has_highest_lower_bound(X,T,B,C1),
                                     description_logic(X), reasoning_task(T),
                                     box_type(B), lower_bound(C1).
 
+% same for upper bound
+has_upper_bound(Y,T,B,C1):- has_upper_bound(X,T,B,C1), higher_logic(Y,X),
+                            % Domains
+                            description_logic(X), description_logic(Y),
+                            reasoning_task(T), box_type(B), upper_bound(C1).
+
+-has_lowest_upper_bound(X,T,B,C1):- has_upper_bound(X,T,B,C1),
+                                     has_upper_bound(X,T,B,D1),
+                                     lower_upper_bound(D1,C1), C1 != D1.
+
+has_lowest_upper_bound(X,T,B,C1):- has_upper_bound(X,T,B,C1),
+                                    not -has_lowest_upper_bound(X,T,B,C1),
+                                    description_logic(X), reasoning_task(T),
+                                    box_type(B), upper_bound(C1).
 % Tests and questions
 
 % question: find all the weakest dls available with concept negation
