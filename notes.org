@@ -18,14 +18,17 @@
   modeling feature
   start writing
 * May 20  
-  - unneeded rules of transitivity
+  - unneeded rules of transitivity /postponed
   - in_p_space ✓
-  - complexity and completeness
+  - complexity and completeness ✓
   - higher_upper_bound ✓
   - no need to say not has_complexity ✓
   - data from navigator
+  - references
   - suggestions:
-    - separating facts and rules
     - deriving features
     - deriving properties, nominals -> tbox -> reasoning about complexities
     - deriving reductions
+* June 2
+  - add references as a separate predicate
+  - add some general reductions

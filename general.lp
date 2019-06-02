@@ -134,20 +134,17 @@ is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C2),
 box_type(empty_t_box).
 box_type(acyclic_t_box).
 box_type(general_t_box).
+larger_box(general_t_box, acyclic_t_box).
+larger_box(acyclic_t_box, empty_t_box).
+larger_box(general_t_box, empty_t_box).
 
 % reasoning_tasks
 reasoning_task(a_box_consistency;
                concept_satisfiability).
 
 % model properties
-has_model_properties(alc, finite_model).
-has_model_properties(alc, tree_model).
-
-% known complexities
-has_lower_bound(alc, concept_satisfiability, empty_t_box, p_space_hard).
-has_upper_bound(alcq, concept_satisfiability, empty_t_box, in_p_space).
-has_lower_bound(alc, a_box_consistency, empty_t_box, p_space_hard).
-has_upper_bound(alcqo, a_box_consistency, empty_t_box, in_p_space).
+has_model_property(alc, finite_model).
+has_model_property(alc, tree_model).
 
 % has_inferred_lower_bound(alcn,concept_satisfiability,general_t_box,n_exp_time_hard).
 % inferred_complexities
@@ -179,6 +176,25 @@ has_lowest_upper_bound(X,T,B,C1):- has_upper_bound(X,T,B,C1),
                                     not -has_lowest_upper_bound(X,T,B,C1),
                                     description_logic(X), reasoning_task(T),
                                     box_type(B), upper_bound(C1).
+
+% known complexities from the navigator
+has_lower_bound(alc, concept_satisfiability, empty_t_box, p_space_hard).
+result_reference(alc, concept_satisfiability, empty_t_box, p_space_hard, 80).
+has_upper_bound(alcq, concept_satisfiability, empty_t_box, in_p_space).
+result_reference(alcq, concept_satisfiability, empty_t_box, in_p_space, 12, th_4_6).
+has_upper_bound(alcqo, a_box_consistency, empty_t_box, in_p_space).
+
+% reductions
+% hardness for abox_consistency of a DL with negation and conjunction follows from hardness of concept sat.
+has_lower_bound(X, a_box_consistency, B, P):-
+                                           has_modeling_feature(X, conjunction),
+                                           has_modeling_feature(X, concept_negation),
+                                           has_lower_bound(X, concept_satisfiability, T, P),
+                                           description_logic(X), box_type(B), lower_bound(P).
+% a more expressive box implies at least as hard as regular one.
+has_lower_bound(X, T, B, P):- has_lower_bound(X, T, B2, P), larger_box(B,B2).
+
+
 % Tests and questions
 
 % question: find all the weakest dls available with concept negation
@@ -221,4 +237,10 @@ has_lowest_upper_bound(X,T,B,C1):- has_upper_bound(X,T,B,C1),
 % has_upper_bound(alc,concept_satisfiability,general_t_box, in_exp_time).
 % #show is_class_complete/4.
 
-#show .
+% test reductions for a_box_consistency
+% has_complex(T,P):- has_lower_bound(alc, a_box_consistency, T, P).
+% #show has_complex/2.
+
+alc_lower_bound(T, B, P):- has_lower_bound(alc, T, B, P), reasoning_task(T), box_type(B), lower_bound(P).
+#show alc_lower_bound/3.
+% #show .
