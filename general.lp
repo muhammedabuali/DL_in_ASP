@@ -1,3 +1,74 @@
+% =========generic rules===============
+
+% transitivity of submodeling feature
+sub_modeling_feature(X,Z):- sub_modeling_feature(X,Y),sub_modeling_feature(Y,Z).
+% a sub modeling feature is a modeling feature
+modeling_feature(X):- sub_modeling_feature(X,Y), modeling_feature(Y).
+modeling_feature(X):- sub_modeling_feature(Y,X), modeling_feature(Y).
+% a model with a feature has its sub modeling features
+has_modeling_feature(X,A):- has_modeling_feature(X,B), sub_modeling_feature(A,B).
+
+% comparing logic expressivity
+has_extra_features(X,Y):- has_modeling_feature(X,A),
+                          not has_modeling_feature(Y,A),
+                          modeling_feature(A),
+                          description_logic(X), description_logic(Y).
+
+higher_logic(X,Y):- has_extra_features(X,Y),
+                    not has_extra_features(Y,X).
+% partial order rules
+% reflexivity
+higher_logic(X,X):- description_logic(X).
+% antisymmetry
+:- higher_logic(X,Y), higher_logic(Y,X), X != Y,
+   description_logic(X), description_logic(Y).
+% transitivity
+higher_logic(X,Z):- higher_logic(X,Y), higher_logic(Y,Z),
+                    description_logic(X), description_logic(Y),
+                    description_logic(Z).
+
+% partial order rules
+% reflexivity
+lower_upper_bound(X,X):- upper_bound(X).
+% antisymmetry
+:- lower_upper_bound(X,Y), lower_upper_bound(Y,X), X != Y,
+   upper_bound(X), upper_bound(Y).
+% transitivity -- needed
+lower_upper_bound(X,Z):- lower_upper_bound(X,Y), lower_upper_bound(Y,Z),
+                         upper_bound(X), upper_bound(Y),
+                         upper_bound(Z).
+
+
+% partial order rules
+% reflexivity
+higher_lower_bound(X,X):- lower_bound(X).
+% antisymmetry
+:- higher_lower_bound(X,Y), higher_lower_bound(Y,X), X != Y,
+   lower_bound(X), lower_bound(Y).
+% transitivity
+higher_lower_bound(X,Z):- higher_lower_bound(X,Y), higher_lower_bound(Y,Z),
+                          lower_bound(X), lower_bound(Y),
+                          lower_bound(Z).
+
+is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C2),
+                             has_upper_bound(X,T,B,C1),
+                             same_class(C1,C2,C),
+                             description_logic(X), reasoning_task(T),
+                             box_type(B).
+
+% reductions
+% hardness for abox_consistency of a DL with negation and conjunction follows from hardness of concept sat.
+has_lower_bound(X, a_box_consistency, B, P):-
+                   has_modeling_feature(X, conjunction),
+                   has_modeling_feature(X, concept_negation),
+                   has_lower_bound(X, concept_satisfiability, T, P),
+                   description_logic(X), box_type(B), lower_bound(P).
+
+% a more expressive box implies at least as hard as regular one.
+has_lower_bound(X, T, B, P):- has_lower_bound(X, T, B2, P), larger_box(B,B2).
+
+% =========specific rules===============
+
 % logics
 description_logic(alc;
                   alcq;
@@ -28,12 +99,6 @@ sub_modeling_feature(( nominals ; qualified_number_restriction;
                        least_fix_point_op),
                        concept_constructor).
 sub_modeling_feature( unqualified_number_restriction,qualified_number_restriction).
-% transitivity
-sub_modeling_feature(X,Z):- sub_modeling_feature(X,Y),sub_modeling_feature(Y,Z).
-
-modeling_feature(X):- sub_modeling_feature(X,Y), modeling_feature(Y).
-modeling_feature(X):- sub_modeling_feature(Y,X), modeling_feature(Y).
-has_modeling_feature(X,A):- has_modeling_feature(X,B), sub_modeling_feature(A,B).
 
 % define alc
 has_modeling_feature(alc,( atomic_concept;bottom_concept;
@@ -60,24 +125,6 @@ has_modeling_feature(alcn,X):- has_modeling_feature(alc,X), modeling_feature(X).
 has_modeling_feature(alcqi, qualified_number_restriction;inverse_roles).
 has_modeling_feature(alcqi, X):- has_modeling_feature(alc,X), modeling_feature(X).
 
-% comparing logic expressivity
-has_extra_features(X,Y):- has_modeling_feature(X,A),
-                    not has_modeling_feature(Y,A),
-                    modeling_feature(A),
-                    description_logic(X), description_logic(Y).
-
-higher_logic(X,Y):- has_extra_features(X,Y),
-                    not has_extra_features(Y,X).
-% partial order rules
-% reflexivity
-higher_logic(X,X):- description_logic(X).
-% antisymmetry
-:- higher_logic(X,Y), higher_logic(Y,X), X != Y,
-   description_logic(X), description_logic(Y).
-% transitivity
-higher_logic(X,Z):- higher_logic(X,Y), higher_logic(Y,Z),
-                    description_logic(X), description_logic(Y),
-                    description_logic(Z).
 
 % complexities
 upper_bound(in_p_time;
@@ -87,16 +134,6 @@ upper_bound(in_p_time;
 % relationship between classes
 lower_upper_bound(in_p_time , in_p_space).
 lower_upper_bound(in_p_space , in_exp_time).
-% partial order rules
-% reflexivity
-lower_upper_bound(X,X):- upper_bound(X).
-% antisymmetry
-:- lower_upper_bound(X,Y), lower_upper_bound(Y,X), X != Y,
-                      upper_bound(X), upper_bound(Y).
-% transitivity -- needed
-lower_upper_bound(X,Z):- lower_upper_bound(X,Y), lower_upper_bound(Y,Z),
-                    upper_bound(X), upper_bound(Y),
-                    upper_bound(Z).
 
 % lower bounds
 lower_bound(p_time_hard;
@@ -109,27 +146,13 @@ higher_lower_bound( p_space_hard , p_time_hard).
 higher_lower_bound(exp_time_hard ,p_space_hard).
 higher_lower_bound(n_exp_time_hard ,exp_time_hard).
 
-% partial order rules
-% reflexivity
-higher_lower_bound(X,X):- lower_bound(X).
-% antisymmetry
-:- higher_lower_bound(X,Y), higher_lower_bound(Y,X), X != Y,
-lower_bound(X), lower_bound(Y).
-% transitivity
-higher_lower_bound(X,Z):- higher_lower_bound(X,Y), higher_lower_bound(Y,Z),
-lower_bound(X), lower_bound(Y),
-lower_bound(Z).
 
 % complete classes
 % represents which higher and lower bounds are of the smae class
 same_class(in_p_time, p_time_hard, p_time).
 same_class(in_p_space, p_space_hard, p_space).
 same_class(in_exp_time, exp_time_hard, exp_time).
-is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C2),
-                              has_upper_bound(X,T,B,C1),
-                              same_class(C1,C2,C),
-                              description_logic(X), reasoning_task(T),
-                              box_type(B).
+
 %boxes
 box_type(empty_t_box).
 box_type(acyclic_t_box).
@@ -184,15 +207,6 @@ has_upper_bound(alcq, concept_satisfiability, empty_t_box, in_p_space).
 result_reference(alcq, concept_satisfiability, empty_t_box, in_p_space, 12, th_4_6).
 has_upper_bound(alcqo, a_box_consistency, empty_t_box, in_p_space).
 
-% reductions
-% hardness for abox_consistency of a DL with negation and conjunction follows from hardness of concept sat.
-has_lower_bound(X, a_box_consistency, B, P):-
-                                           has_modeling_feature(X, conjunction),
-                                           has_modeling_feature(X, concept_negation),
-                                           has_lower_bound(X, concept_satisfiability, T, P),
-                                           description_logic(X), box_type(B), lower_bound(P).
-% a more expressive box implies at least as hard as regular one.
-has_lower_bound(X, T, B, P):- has_lower_bound(X, T, B2, P), larger_box(B,B2).
 
 
 % Tests and questions
