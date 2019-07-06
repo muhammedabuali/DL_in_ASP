@@ -192,16 +192,19 @@ has_lower_bound(alc, concept_satisfiability, empty_t_box, p_space_hard, 80).
 has_upper_bound(alcq, concept_satisfiability, empty_t_box, in_p_space, 12).
 has_upper_bound(alcqo, a_box_consistency, empty_t_box, in_p_space, 17).
 
-% ALC With General t-box
-has_lower_bound(alc, concept_satisfiability, general_t_box, exp_time_hard, 77).
-has_upper_bound(alc, concept_satisfiability, general_t_box, exp_time_hard, 33).
-
 % model properties
 has_model_property(alc, finite_model, 77).
 has_model_property(alc, tree_model, 77).
 
+% ALC With General t-box
+has_lower_bound(alc, concept_satisfiability, general_t_box, exp_time_hard, 77).
+has_upper_bound(alc, concept_satisfiability, general_t_box, exp_time_hard, 33).
+has_upper_bound(shiq, a_box_consistency, general_t_box, exp_time_hard, 33).
+
+
 % reductions from the navigator
 % hardness for abox_consistency of a DL with negation and conjunction
+% taken from Prof. Bader slides.
 % follows from hardness of concept sat.
 has_lower_bound(X, a_box_consistency, B, P, 0):-
                    has_modeling_feature(X, conjunction),
@@ -212,6 +215,8 @@ has_lower_bound(X, a_box_consistency, B, P, 0):-
 % a more expressive box implies at least as hard as regular one.
 % example hardness for acyclic tbox follows from without tbox case
 has_lower_bound(X, T, B, P, 0):- has_lower_bound(X, T, B2, P, _), larger_box(B,B2).
+% an upper bound for higher logic implies same bound at most for lower logics
+has_upper_bound(X, T, B, P, 0):- has_upper_bound(X2, T, B, P, _), higher_logic(X2, X).
 
 
 % ========================================
@@ -262,6 +267,7 @@ has_lower_bound(X, T, B, P, 0):- has_lower_bound(X, T, B2, P, _), larger_box(B,B
 % has_complex(T,P):- has_lower_bound(alc, a_box_consistency, T, P, 0).
 % #show has_complex/2.
 
-alc_lower_bound(T, B, P):- has_lower_bound(alc, T, B, P, _), reasoning_task(T), box_type(B), lower_bound(P).
-#show alc_lower_bound/3.
-% #show .
+% alc_lower_bound(T, B, P):- has_lower_bound(alc, T, B, P, _), reasoning_task(T), box_type(B), lower_bound(P).
+% #show alc_lower_bound/3.
+
+#show.
