@@ -26,7 +26,8 @@
   - data from navigator
   - references
   - suggestions:
-    - deriving features
+    - deriving featuremore_expressives
+      has_feature(b):- has_feature(a). 
     - deriving properties, nominals -> tbox -> reasoning about complexities
     - deriving reductions
 * June 2

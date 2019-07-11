@@ -1,3 +1,11 @@
+% expressivity
+#include "expressivity.lp".
+% model properties
+#include "model_property.lp".
+% modeling features
+#include "features.lp".
+% logics
+#include "logics.lp".
 % =========generic rules===============
 
 % transitivity of submodeling feature
@@ -16,6 +24,7 @@ has_extra_features(X,Y):- has_modeling_feature(X,A),
 
 higher_logic(X,Y):- has_extra_features(X,Y),
                     not has_extra_features(Y,X).
+-higher_logic(Y,X):- has_extra_features(X,Y).
 % partial order rules
 % reflexivity
 higher_logic(X,X):- description_logic(X).
@@ -59,61 +68,6 @@ is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C2, _),
 
 % =========specific rules===============
 
-% logics
-description_logic(alc;
-                  alcq;
-                  alcn;
-                  alco;
-                  alci;
-                  alcqi;
-                  alcqo;
-                  aclh;
-                  r;
-                  s).
-% features
-modeling_feature(atomic_concept;
-                  top_concept;
-                  bottom_concept;
-                  concept_negation;
-                  concept_constructor;
-                  conjunction;disjunction;
-                  atomic_negation;nominals;
-                  inverse_roles;transitive_roles;
-                  functionality;least_fix_point_op;
-                  role_heirarchy;complex_role_inclusion;
-                  value_restriction;existential_restriction).
-
-%sub features
-sub_modeling_feature(( nominals ; qualified_number_restriction;
-                       functionality; unqualified_number_restriction;
-                       least_fix_point_op),
-                       concept_constructor).
-sub_modeling_feature( unqualified_number_restriction,qualified_number_restriction).
-
-% define alc
-has_modeling_feature(alc,( atomic_concept;bottom_concept;
-                      concept_negation;existential_restriction;
-                      disjunction;conjunction;value_restriction;
-                      top_concept )).
-% define s
-has_modeling_feature(s,transitive_roles).
-has_modeling_feature(s,X):- has_modeling_feature(alc,X), modeling_feature(X).
-
-% define alco
-has_modeling_feature(alco,nominals).
-has_modeling_feature(alco,X):- has_modeling_feature(alc,X), modeling_feature(X).
-
-% define alcq
-has_modeling_feature(alcq, qualified_number_restriction).
-has_modeling_feature(alcq,X):- has_modeling_feature(alc,X), modeling_feature(X).
-
-% define alcn
-has_modeling_feature(alcn, unqualified_number_restriction).
-has_modeling_feature(alcn,X):- has_modeling_feature(alc,X), modeling_feature(X).
-
-% define alcqi
-has_modeling_feature(alcqi, qualified_number_restriction;inverse_roles).
-has_modeling_feature(alcqi, X):- has_modeling_feature(alc,X), modeling_feature(X).
 
 
 % complexities
@@ -192,9 +146,6 @@ has_lower_bound(alc, concept_satisfiability, empty_t_box, p_space_hard, 80).
 has_upper_bound(alcq, concept_satisfiability, empty_t_box, in_p_space, 12).
 has_upper_bound(alcqo, a_box_consistency, empty_t_box, in_p_space, 17).
 
-% model properties
-has_model_property(alc, finite_model, 77).
-has_model_property(alc, tree_model, 77).
 
 % ALC With General t-box
 has_lower_bound(alc, concept_satisfiability, general_t_box, exp_time_hard, 77).
@@ -202,9 +153,9 @@ has_upper_bound(alc, concept_satisfiability, general_t_box, exp_time_hard, 33).
 has_upper_bound(shiq, a_box_consistency, general_t_box, exp_time_hard, 33).
 
 
-% reductions from the navigator
+% reductions
 % hardness for abox_consistency of a DL with negation and conjunction
-% taken from Prof. Bader slides.
+% taken from Prof. Bader slides slide 1, description logic, ws2017.
 % follows from hardness of concept sat.
 has_lower_bound(X, a_box_consistency, B, P, 0):-
                    has_modeling_feature(X, conjunction),
@@ -270,4 +221,10 @@ has_upper_bound(X, T, B, P, 0):- has_upper_bound(X2, T, B, P, _), higher_logic(X
 % alc_lower_bound(T, B, P):- has_lower_bound(alc, T, B, P, _), reasoning_task(T), box_type(B), lower_bound(P).
 % #show alc_lower_bound/3.
 
+% #show higher_logic/2.
+lower(X):-has_extra_features(alcqo,X).
+higher(X):-has_extra_features(X,alcqo).
+feature(X):-has_modeling_feature(alcqo,X).
+feature_alcqi(X):-has_modeling_feature(alcqi,X).
+#show higher_logic/2.
 #show.
