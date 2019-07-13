@@ -8,6 +8,7 @@ description_logic(alc;
                   alci;
                   alcqi;
                   alcqo;
+                  shiq;
                   alch;
                   r;
                   s).
@@ -20,6 +21,11 @@ has_modeling_feature(alc,( atomic_concept;bottom_concept;
 % define s
 has_modeling_feature(s, transitive_roles).
 has_modeling_feature(s,X):- has_modeling_feature(alc,X), modeling_feature(X).
+
+
+% define shiq
+has_modeling_feature(shiq, ( transitive_roles; role_heirarchy )).
+has_modeling_feature(shiq,X):- has_modeling_feature(alcqi,X), modeling_feature(X).
 
 % define r
 has_modeling_feature(r, ( transitive_roles; role_heirarchy; complex_role_inclusion )).

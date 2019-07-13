@@ -10,27 +10,17 @@
 #include "logics.lp".
 % boxes
 #include "boxes.lp".
+% reasoning tasks
+#include "tasks.lp".
+% results from the navigator
+#include "navigator_data.lp".
 
-
-% reasoning_tasks
-reasoning_task(a_box_consistency;
-               concept_satisfiability).
 
 
 % has_inferred_lower_bound(alcn,concept_satisfiability,general_t_box,n_exp_time_hard).
 
 % -------- complexity results -----
 
-% known complexities from the navigator
-has_lower_bound(alc, concept_satisfiability, empty_t_box, p_space_hard, 80).
-has_upper_bound(alcq, concept_satisfiability, empty_t_box, in_p_space, 12).
-has_upper_bound(alcqo, a_box_consistency, empty_t_box, in_p_space, 17).
-
-
-% ALC With General t-box
-has_lower_bound(alc, concept_satisfiability, general_t_box, exp_time_hard, 77).
-has_upper_bound(alc, concept_satisfiability, general_t_box, exp_time_hard, 33).
-has_upper_bound(shiq, a_box_consistency, general_t_box, exp_time_hard, 33).
 
 
 % ------ reductions ------
@@ -49,7 +39,6 @@ has_lower_bound(X, a_box_consistency, B, P, 0):-
 % a more expressive box implies at least as hard as regular one.
 % example hardness for acyclic tbox follows from without tbox case
 has_lower_bound(X, T, B, P, 0):- has_lower_bound(X, T, B2, P, _), larger_box(B,B2).
-
 
 % ----- [3] --------
 % an upper bound for higher logic implies same bound at most for lower logics
@@ -108,9 +97,14 @@ has_upper_bound(X, T, B, P, 0):- has_upper_bound(X2, T, B, P, _), higher_logic(X
 % #show alc_lower_bound/3.
 
 % #show higher_logic/2.
-lower(X):-has_extra_features(alcqo,X).
-higher(X):-has_extra_features(X,alcqo).
-feature(X):-has_modeling_feature(alcqo,X).
-feature_alcqi(X):-has_modeling_feature(alcqi,X).
-#show higher_logic/2.
+
+
+% show complexity for alcn
+% test implied hardness for alcn
+% alcn_con_sat_lb(P):- has_lower_bound(alcn, concept_satisfiability, general_t_box, P, _).
+% alcn_con_sat_ub(P):- has_upper_bound(alcn, concept_satisfiability, general_t_box, P, _).
+% #show alcn_con_sat_ub/1.
+% #show alcn_con_sat_lb/1.
+
+
 #show.
