@@ -52,3 +52,4 @@ has_modeling_feature(alcn,X):- has_modeling_feature(alc,X), modeling_feature(X).
 % define alcqi
 has_modeling_feature(alcqi, ( qualified_number_restriction;inverse_roles )).
 has_modeling_feature(alcqi, X):- has_modeling_feature(alc,X), modeling_feature(X).
+
