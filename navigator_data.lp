@@ -43,3 +43,8 @@ has_upper_bound(alcn, concept_satisfiability, empty_t_box, in_p_space, 12).
 
 % - general TBOX
 has_upper_bound(shiq, concept_satisfiability, general_t_box, exp_time_hard, 33).
+
+% - ALCQ
+
+% - model properties
+

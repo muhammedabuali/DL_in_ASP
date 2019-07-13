@@ -23,7 +23,7 @@
 
 
 
-% ------ reductions ------
+% ------ inferences ------
 
 % ----- [1] --------
 % hardness for abox_consistency of a DL with negation and conjunction
@@ -44,6 +44,9 @@ has_lower_bound(X, T, B, P, 0):- has_lower_bound(X, T, B2, P, _), larger_box(B,B
 % an upper bound for higher logic implies same bound at most for lower logics
 has_upper_bound(X, T, B, P, 0):- has_upper_bound(X2, T, B, P, _), higher_logic(X2, X).
 
+% ---- [4] ------
+% all sublogics of SHOQ have fmp
+has_model_property(X, finite_model, 63):- higher_logic(shoq, X).
 
 % ========================================
 
@@ -106,5 +109,9 @@ has_upper_bound(X, T, B, P, 0):- has_upper_bound(X2, T, B, P, _), higher_logic(X
 % #show alcn_con_sat_ub/1.
 % #show alcn_con_sat_lb/1.
 
+% test sublogic of shoq has fmp
+
+alcq_fmp:- has_model_property(alci, finite_model,_).
+#show alcq_fmp/0.
 
 #show.
