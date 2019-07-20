@@ -38,22 +38,33 @@ has_lower_bound(X, a_box_consistency, B, P, 0):-
 % ----- [2] --------
 % a higher tbox has same hardness at least as lower tbox
 % example hardness for acyclic tbox follows from without tbox case
-has_lower_bound(X, T, B, P, 0):- has_lower_bound(X, T, B2, P, _), larger_box(B,B2).
+has_lower_bound(X, T, B, P, higher_t_box):- has_lower_bound(X, T, B2, P, _), larger_box(B,B2).
 
 
 % ----- [2] --------
 % a lower tbox has same upper bound at most as upper tbox
 % example hardness for acyclic tbox follows from without tbox case
-has_upper_bound(X, T, B, P, 0):- has_upper_bound(X, T, B2, P, _), larger_box(B2,B).
+has_upper_bound(X, T, B, P, lower_t_box):-
+                   has_upper_bound(X, T, B2, P, _), larger_box(B2,B).
 
 % ----- [3] --------
 % an upper bound for higher logic implies same bound at most for lower logics
-has_upper_bound(X, T, B, P, 0):- has_upper_bound(X2, T, B, P, _), higher_logic(X2, X).
+has_upper_bound(X, T, B, P, lower_logic):- has_upper_bound(X2, T, B, P, _), higher_logic(X2, X).
+
+% a lower bound for lower logic implies same bound at least for lower logics
+has_lower_bound(X,T,B,C1, higher_logic):- has_lower_bound(X2,T,B,C1, _), higher_logic(X,X2).
 
 % ---- [4] ------
 % all sublogics of SHOQ have fmp
 has_model_property(X, finite_model, 63):- higher_logic(shoq, X).
 
+% ---- [5] ------
+% general tbox with extensions of uALC is as complex as empty TBOX
+has_upper_bound(X, T, B, P, 30):- has_upper_bound(X, T, _, P, _),
+                                  higher_logic(X, ualc), box_type(B).
+
+has_lower_bound(X, T, B, P, 30):- has_lower_bound(X, T, _, P, _),
+                                  higher_logic(X, ualc), box_type(B).
 % ========================================
 
 % Tests and questions
@@ -117,34 +128,8 @@ has_model_property(X, finite_model, 63):- higher_logic(shoq, X).
 
 % test sublogic of shoq has fmp
 
-upper_bound_cs_et(P):- has_lowest_upper_bound(alc, concept_satisfiability, empty_t_box,P).
-lower_bound_cs_et(P):- has_highest_lower_bound(alc, concept_satisfiability, empty_t_box,P).
-upper_bound_ac_et(P):- has_lowest_upper_bound(alc, a_box_consistency, empty_t_box,P).
-lower_bound_ac_et(P):- has_highest_lower_bound(alc, a_box_consistency, empty_t_box,P).
-
-upper_bound_cs_at(P):- has_lowest_upper_bound(alc, concept_satisfiability, acyclic_t_box,P).
-lower_bound_cs_at(P):- has_highest_lower_bound(alc, concept_satisfiability, acyclic_t_box,P).
-upper_bound_ac_at(P):- has_lowest_upper_bound(alc, a_box_consistency, acyclic_t_box,P).
-lower_bound_ac_at(P):- has_highest_lower_bound(alc, a_box_consistency, acyclic_t_box,P).
-
-upper_bound_cs_gt(P):- has_lowest_upper_bound(alc, concept_satisfiability, general_t_box,P).
-lower_bound_cs_gt(P):- has_highest_lower_bound(alc, concept_satisfiability, general_t_box,P).
-upper_bound_ac_gt(P):- has_lowest_upper_bound(alc, a_box_consistency, general_t_box,P).
-lower_bound_ac_gt(P):- has_highest_lower_bound(alc, a_box_consistency, general_t_box,P).
-fin_model:- has_model_property(alc, finite_model,_).
-#show fin_model.
-
 #show.
 
-% #show  upper_bound_cs_et/1.
-% #show  lower_bound_cs_et/1.
-% #show  upper_bound_ac_et/1.
-% #show  lower_bound_ac_et/1.
-% #show  upper_bound_cs_at/1.
-% #show  lower_bound_cs_at/1.
-% #show  upper_bound_ac_at/1.
-% #show  lower_bound_ac_at/1.
-% #show  upper_bound_cs_gt/1.
-% #show  lower_bound_cs_gt/1.
-% #show  upper_bound_ac_gt/1.
-% #show  lower_bound_ac_gt/1.
+
+
+

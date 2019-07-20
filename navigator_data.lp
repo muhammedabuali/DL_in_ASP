@@ -51,3 +51,13 @@ has_upper_bound(shiq, concept_satisfiability, general_t_box, exp_time, 33).
 % - model properties
 
 % - ALCO
+has_upper_bound(alcqo, concept_satisfiability, acyclic_t_box, p_space, 17).
+has_upper_bound(shoq, concept_satisfiability, general_t_box, exp_time, 0).
+has_upper_bound(alco, a_box_consistency, general_t_box, exp_time, 76).
+
+
+% - uALC
+has_lower_bound(ualc, concept_satisfiability, general_t_box, exp_time, 30).
+has_upper_bound(ualc, concept_satisfiability, general_t_box, exp_time, 30).
+has_model_property(ualc, finite_model, 57).
+has_model_property(ualc, finite_model, 81).

@@ -25,12 +25,6 @@ higher_lower_bound(n_exp_time ,exp_time).
 
 % complete classes
 
-% inferred_complexities
-has_lower_bound(Y,T,B,C1, 0):- has_lower_bound(X,T,B,C1, _), higher_logic(Y,X),
-                            % Domains
-                            description_logic(X), description_logic(Y),
-                            reasoning_task(T), box_type(B), lower_bound(C1).
-
 -has_highest_lower_bound(X,T,B,C1):- has_lower_bound(X,T,B,C1, _),
                                       has_lower_bound(X,T,B,D1, _),
                                       higher_lower_bound(D1,C1), C1 != D1.
@@ -39,12 +33,6 @@ has_highest_lower_bound(X,T,B,C1):- has_lower_bound(X,T,B,C1, _),
                                     not -has_highest_lower_bound(X,T,B,C1),
                                     description_logic(X), reasoning_task(T),
                                     box_type(B), lower_bound(C1).
-
-% same for upper bound
-has_upper_bound(Y,T,B,C1, 0):- has_upper_bound(X,T,B,C1, _), higher_logic(Y,X),
-                            % Domains
-                            description_logic(X), description_logic(Y),
-                            reasoning_task(T), box_type(B), upper_bound(C1).
 
 -has_lowest_upper_bound(X,T,B,C1):- has_upper_bound(X,T,B,C1, _),
                                      has_upper_bound(X,T,B,D1, _),
