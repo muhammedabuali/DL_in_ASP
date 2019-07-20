@@ -19,10 +19,12 @@
 has_model_property(alc, finite_model, 77).
 has_model_property(alc, tree_model, 77).
 
-% - empty TBOX
+% empty TBOX
 has_lower_bound(alc, concept_satisfiability, empty_t_box, p_space, 80).
-has_upper_bound(alcq, concept_satisfiability, empty_t_box, p_space, 12).
-has_upper_bound(alcqo, a_box_consistency, empty_t_box, p_space, 17).
+
+% - acyclic TBOX
+has_upper_bound(alcq, concept_satisfiability, acyclic_t_box, p_space, 12).
+has_upper_bound(alcqo, a_box_consistency, acyclic_t_box, p_space, 17).
 
 
 % - general TBOX
@@ -49,4 +51,3 @@ has_upper_bound(shiq, concept_satisfiability, general_t_box, exp_time, 33).
 % - model properties
 
 % - ALCO
-% has_lower_bound(alco, concept_satisfiability, empty_t_box, )

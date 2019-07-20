@@ -36,9 +36,15 @@ has_lower_bound(X, a_box_consistency, B, P, 0):-
                    description_logic(X), box_type(B), lower_bound(P).
 
 % ----- [2] --------
-% a more expressive box implies at least as hard as regular one.
+% a higher tbox has same hardness at least as lower tbox
 % example hardness for acyclic tbox follows from without tbox case
 has_lower_bound(X, T, B, P, 0):- has_lower_bound(X, T, B2, P, _), larger_box(B,B2).
+
+
+% ----- [2] --------
+% a lower tbox has same upper bound at most as upper tbox
+% example hardness for acyclic tbox follows from without tbox case
+has_upper_bound(X, T, B, P, 0):- has_upper_bound(X, T, B2, P, _), larger_box(B2,B).
 
 % ----- [3] --------
 % an upper bound for higher logic implies same bound at most for lower logics
@@ -111,7 +117,34 @@ has_model_property(X, finite_model, 63):- higher_logic(shoq, X).
 
 % test sublogic of shoq has fmp
 
-alcq_fmp:- has_model_property(alci, finite_model,_).
-#show alcq_fmp/0.
+upper_bound_cs_et(P):- has_lowest_upper_bound(alc, concept_satisfiability, empty_t_box,P).
+lower_bound_cs_et(P):- has_highest_lower_bound(alc, concept_satisfiability, empty_t_box,P).
+upper_bound_ac_et(P):- has_lowest_upper_bound(alc, a_box_consistency, empty_t_box,P).
+lower_bound_ac_et(P):- has_highest_lower_bound(alc, a_box_consistency, empty_t_box,P).
+
+upper_bound_cs_at(P):- has_lowest_upper_bound(alc, concept_satisfiability, acyclic_t_box,P).
+lower_bound_cs_at(P):- has_highest_lower_bound(alc, concept_satisfiability, acyclic_t_box,P).
+upper_bound_ac_at(P):- has_lowest_upper_bound(alc, a_box_consistency, acyclic_t_box,P).
+lower_bound_ac_at(P):- has_highest_lower_bound(alc, a_box_consistency, acyclic_t_box,P).
+
+upper_bound_cs_gt(P):- has_lowest_upper_bound(alc, concept_satisfiability, general_t_box,P).
+lower_bound_cs_gt(P):- has_highest_lower_bound(alc, concept_satisfiability, general_t_box,P).
+upper_bound_ac_gt(P):- has_lowest_upper_bound(alc, a_box_consistency, general_t_box,P).
+lower_bound_ac_gt(P):- has_highest_lower_bound(alc, a_box_consistency, general_t_box,P).
+fin_model:- has_model_property(alc, finite_model,_).
+#show fin_model.
 
 #show.
+
+% #show  upper_bound_cs_et/1.
+% #show  lower_bound_cs_et/1.
+% #show  upper_bound_ac_et/1.
+% #show  lower_bound_ac_et/1.
+% #show  upper_bound_cs_at/1.
+% #show  lower_bound_cs_at/1.
+% #show  upper_bound_ac_at/1.
+% #show  lower_bound_ac_at/1.
+% #show  upper_bound_cs_gt/1.
+% #show  lower_bound_cs_gt/1.
+% #show  upper_bound_ac_gt/1.
+% #show  lower_bound_ac_gt/1.
