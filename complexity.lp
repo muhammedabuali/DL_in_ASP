@@ -4,30 +4,26 @@
 #include "expressivity.lp".
 
 % complexities
-upper_bound(in_p_time;
-  in_p_space;
-  in_exp_time).
+upper_bound(p_time;
+  p_space;
+  exp_time).
 
 % relationship between classes
-lower_upper_bound(in_p_time , in_p_space).
-lower_upper_bound(in_p_space , in_exp_time).
+lower_upper_bound(p_time , p_space).
+lower_upper_bound(p_space , exp_time).
 
 % lower bounds
-lower_bound(p_time_hard;
-  p_space_hard;
-  exp_time_hard;
-  n_exp_time_hard
+lower_bound(p_time;
+  p_space;
+  exp_time;
+  n_exp_time
 ).
 
-higher_lower_bound( p_space_hard , p_time_hard).
-higher_lower_bound(exp_time_hard ,p_space_hard).
-higher_lower_bound(n_exp_time_hard ,exp_time_hard).
+higher_lower_bound( p_space , p_time).
+higher_lower_bound(exp_time ,p_space).
+higher_lower_bound(n_exp_time ,exp_time).
 
 % complete classes
-% represents which higher and lower bounds are of the smae class
-same_class(in_p_time, p_time_hard, p_time).
-same_class(in_p_space, p_space_hard, p_space).
-same_class(in_exp_time, exp_time_hard, exp_time).
 
 % inferred_complexities
 has_lower_bound(Y,T,B,C1, 0):- has_lower_bound(X,T,B,C1, _), higher_logic(Y,X),
@@ -83,8 +79,7 @@ higher_lower_bound(X,Z):- higher_lower_bound(X,Y), higher_lower_bound(Y,Z),
                           lower_bound(X), lower_bound(Y),
                           lower_bound(Z).
 
-is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C2, _),
-                             has_upper_bound(X,T,B,C1, _),
-                             same_class(C1,C2,C),
+is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C, _),
+                             has_upper_bound(X,T,B,C, _),
                              description_logic(X), reasoning_task(T),
                              box_type(B).

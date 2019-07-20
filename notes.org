@@ -24,12 +24,18 @@
   - higher_upper_bound ✓
   - no need to say not has_complexity ✓
   - data from navigator
-  - references
+  - references ✓
   - suggestions:
-    - deriving featuremore_expressives
+    - deriving feature
+      more_expressives
       has_feature(b):- has_feature(a). 
     - deriving properties, nominals -> tbox -> reasoning about complexities
     - deriving reductions
 * June 2
   - add references as a separate predicate
   - add some general reductions
+* Action Tue 16
+  writing reports
+  upper bounds the same
+  add a gui
+  infer completeness

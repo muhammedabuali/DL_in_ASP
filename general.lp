@@ -17,7 +17,7 @@
 
 
 
-% has_inferred_lower_bound(alcn,concept_satisfiability,general_t_box,n_exp_time_hard).
+% has_inferred_lower_bound(alcn,concept_satisfiability,general_t_box,n_exp_time).
 
 % -------- complexity results -----
 
@@ -27,12 +27,12 @@
 
 % ----- [1] --------
 % hardness for abox_consistency of a DL with negation and conjunction
-% taken from Prof. Bader slides slide 1, description logic, ws2017.
 % follows from hardness of concept sat.
+% taken from Prof. Bader slides slide 1, description logic, ws2017.
 has_lower_bound(X, a_box_consistency, B, P, 0):-
                    has_modeling_feature(X, conjunction),
                    has_modeling_feature(X, concept_negation),
-                   has_lower_bound(X, concept_satisfiability, T, P, _),
+                   has_lower_bound(X, concept_satisfiability, B, P, _),
                    description_logic(X), box_type(B), lower_bound(P).
 
 % ----- [2] --------
@@ -84,12 +84,12 @@ has_model_property(X, finite_model, 63):- higher_logic(shoq, X).
 
 % test : has_highest_lower_bound
 % add more lower bounds and check the highest is selected
-% has_inferred_lower_bound(alcqi, concept_satisfiability, general_t_box, p_space_hard).
+% has_inferred_lower_bound(alcqi, concept_satisfiability, general_t_box, p_space).
 % #show has_highest_lower_bound/4.
 
 % test is_class_complete
-% has_lower_bound(alc,concept_satisfiability,general_t_box,exp_time_hard, 0).
-% has_upper_bound(alc,concept_satisfiability,general_t_box, in_exp_time, 0).
+% has_lower_bound(alc,concept_satisfiability,general_t_box,exp_time, 0).
+% has_upper_bound(alc,concept_satisfiability,general_t_box, exp_time, 0).
 % #show is_class_complete/4.
 
 % test reductions for a_box_consistency
