@@ -21,6 +21,8 @@ sub_modeling_feature(( nominals ; qualified_number_restriction;
                        least_fix_point_op),
                        concept_constructor).
 sub_modeling_feature( unqualified_number_restriction,qualified_number_restriction).
+sub_modeling_feature( functionality, unqualified_number_restriction).
+
 
 
 % transitivity of submodeling feature
