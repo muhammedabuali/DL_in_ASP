@@ -61,3 +61,11 @@ has_lower_bound(ualc, concept_satisfiability, general_t_box, exp_time, 30).
 has_upper_bound(ualc, concept_satisfiability, general_t_box, exp_time, 30).
 has_model_property(ualc, finite_model, 57).
 has_model_property(ualc, finite_model, 81).
+
+
+% ALCI
+has_upper_bound(alci, concept_satisfiability, acyclic_t_box, p_space, 12).
+has_upper_bound(alci, a_box_consistency, empty_t_box, p_space, 32).
+
+has_upper_bound(si, concept_satisfiability, acyclic_t_box, p_space, 16).
+has_upper_bound(alci, a_box_consistency, acyclic_t_box, p_space, 32).

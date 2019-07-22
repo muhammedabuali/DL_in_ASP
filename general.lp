@@ -65,6 +65,15 @@ has_upper_bound(X, T, B, P, 30):- has_upper_bound(X, T, _, P, _),
 
 has_lower_bound(X, T, B, P, 30):- has_lower_bound(X, T, _, P, _),
                                   higher_logic(X, ualc), box_type(B).
+
+% ---- [6] ------
+% sublogics of si have fmp
+has_model_property(X, finite_model, 63):- higher_logic(si, X).
+
+% ---- [6] ------
+% sublogics of alcif_reg have tmp
+has_model_property(X, tree_model, 2):- higher_logic(alcif_reg, X).
+
 % ========================================
 
 % Tests and questions

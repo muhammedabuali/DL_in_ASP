@@ -7,6 +7,7 @@ description_logic(alc;
                   alco;
                   ualc;
                   alci;
+                  alcif_reg;
                   alcqi;
                   alcqo;
                   alcoi;
@@ -15,6 +16,7 @@ description_logic(alc;
                   shoi;
                   alch;
                   r;
+                  si;
                   s).
 
 % define alc
@@ -26,6 +28,9 @@ has_modeling_feature(alc,( atomic_concept;bottom_concept;
 has_modeling_feature(s, transitive_roles).
 has_modeling_feature(s,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
+% define si
+has_modeling_feature(si, inverse_roles).
+has_modeling_feature(si,X):- has_modeling_feature(s,X), modeling_feature(X).
 
 % define shoq
 has_modeling_feature(shoq, ( transitive_roles; role_heirarchy )).
@@ -58,6 +63,19 @@ has_modeling_feature(alcq,X):- has_modeling_feature(alc,X), modeling_feature(X).
 % define alci
 has_modeling_feature(alci, inverse_roles).
 has_modeling_feature(alci,X):- has_modeling_feature(alc,X), modeling_feature(X).
+
+% define alcif
+has_modeling_feature(alcif, functionality).
+has_modeling_feature(alcif, X):- has_modeling_feature(alci,X), modeling_feature(X).
+
+
+% define alcif_reg
+has_modeling_featue(X, role_union):- has_reg_features(X).
+has_modeling_featue(X, role_chain):- has_reg_features(X).
+has_modeling_featue(X, reflexive_transitive_closure):- has_reg_features(X).
+has_modeling_featue(X, concept_identity):- has_reg_features(X).
+has_reg_features(alcif_reg).
+has_modeling_feature(alcif_reg,X):- has_modeling_feature(alcif,X), modeling_feature(X).
 
 % define alcqo
 has_modeling_feature(alcqo, (qualified_number_restriction;nominals)).
