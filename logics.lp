@@ -17,9 +17,13 @@ description_logic(alc;
                   alcon;
                   alcof;
                   alcoi;
+                  alcoif;
+                  alcoin;
+                  alcoiq;
                   shiq;
                   shoq;
                   shoi;
+                  shoiq;
                   alch;
                   r;
                   si;
@@ -50,6 +54,10 @@ has_modeling_feature(shoq,X):- has_modeling_feature(alcoq,X), modeling_feature(X
 % define shoi
 has_modeling_feature(shoi, ( transitive_roles; role_heirarchy )).
 has_modeling_feature(shoi,X):- has_modeling_feature(alcoi,X), modeling_feature(X).
+
+% define shoiq
+has_modeling_feature(shoiq, qualified_number_restriction).
+has_modeling_feature(shoiq,X):- has_modeling_feature(shoi,X), modeling_feature(X).
 
 % define shiq
 has_modeling_feature(shiq, ( transitive_roles; role_heirarchy )).
@@ -103,6 +111,18 @@ has_modeling_feature(alcoq,X):- has_modeling_feature(alc,X), modeling_feature(X)
 % define alcoi
 has_modeling_feature(alcoi, (inverse_roles ;nominals)).
 has_modeling_feature(alcoi,X):- has_modeling_feature(alc,X), modeling_feature(X).
+
+% define alcoif
+has_modeling_feature(alcoif, functionality).
+has_modeling_feature(alcoif,X):- has_modeling_feature(alcoi,X), modeling_feature(X).
+
+% define alcoin
+has_modeling_feature(alcoin, unqualified_number_restriction).
+has_modeling_feature(alcoin,X):- has_modeling_feature(alcoi,X), modeling_feature(X).
+
+% define alcoiq
+has_modeling_feature(alcoiq, qualified_number_restriction).
+has_modeling_feature(alcoiq,X):- has_modeling_feature(alcoi,X), modeling_feature(X).
 
 % define alcn
 has_modeling_feature(alcn, unqualified_number_restriction).

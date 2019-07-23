@@ -92,3 +92,15 @@ has_upper_bound(shoi, a_box_consistency, general_t_box, exp_time, 33).
 % ALCOQ
 has_upper_bound(alcoq, a_box_consistency, empty_t_box, p_space, 76).
 has_upper_bound(alcoq, a_box_consistency, general_t_box, exp_time, 76).
+
+% ALCOIF
+has_lower_bound(alcoif, concept_satisfiability, empty_t_box, n_exp_time, 82).
+has_upper_bound(shoiq, concept_satisfiability, empty_t_box, n_exp_time, 12).
+-has_model_property(alcoif, finite_model,  2).
+% ALCOIN
+-has_model_property(alcoin, finite_model,  2).
+% ALCOIQ
+-has_model_property(alcoiq, finite_model,  2).
+has_upper_bound(alcoiq, a_box_consistency, empty_t_box, n_exp_time, 76).
+
+

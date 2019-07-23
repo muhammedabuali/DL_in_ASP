@@ -6,11 +6,13 @@
 % complexities
 upper_bound(p_time;
   p_space;
-  exp_time).
+  exp_time;
+  n_exp_time).
 
 % relationship between classes
 lower_upper_bound(p_time , p_space).
 lower_upper_bound(p_space , exp_time).
+lower_upper_bound(exp_time, n_exp_time).
 
 % lower bounds
 lower_bound(p_time;
