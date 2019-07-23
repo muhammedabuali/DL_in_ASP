@@ -103,4 +103,15 @@ has_upper_bound(shoiq, concept_satisfiability, empty_t_box, n_exp_time, 12).
 -has_model_property(alcoiq, finite_model,  2).
 has_upper_bound(alcoiq, a_box_consistency, empty_t_box, n_exp_time, 76).
 
+% ualc
+has_upper_bound(ualc, concept_satisfiability, empty_t_box, exp_time, 30).
+has_lower_bound(ualc, concept_satisfiability, empty_t_box, exp_time, 30).
+has_model_property(ualc, finite_model, 57).
+has_model_property(ualc, tree_model, 81).
 
+% ualcf
+has_upper_bound(ualcf, concept_satisfiability, empty_t_box, exp_time, 30).
+% ualcn
+has_upper_bound(ualcn, concept_satisfiability, empty_t_box, exp_time, 30).
+% ualcq
+has_upper_bound(ualcq, concept_satisfiability, empty_t_box, exp_time, 30).

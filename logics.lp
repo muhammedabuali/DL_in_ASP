@@ -6,6 +6,9 @@ description_logic(alc;
                   alcn;
                   alco;
                   ualc;
+                  ualcf;
+                  ualcn;
+                  ualcq;
                   alci;
                   alci_reg;
                   alcf;
@@ -78,6 +81,18 @@ has_modeling_feature(alcf, X):- has_modeling_feature(alc,X), modeling_feature(X)
 % define ualc
 has_modeling_feature(ualc, least_fix_point_op).
 has_modeling_feature(ualc,X):- has_modeling_feature(alc,X), modeling_feature(X).
+
+% define ualcf
+has_modeling_feature(ualcf, functionality).
+has_modeling_feature(ualcf,X):- has_modeling_feature(ualc,X), modeling_feature(X).
+
+% define ualcn
+has_modeling_feature(ualcn, unqualified_number_restriction).
+has_modeling_feature(ualcn,X):- has_modeling_feature(ualc,X), modeling_feature(X).
+
+% define ualcq
+has_modeling_feature(ualcq, qualified_number_restriction).
+has_modeling_feature(ualcq,X):- has_modeling_feature(ualc,X), modeling_feature(X).
 
 % define alcq
 has_modeling_feature(alcq, qualified_number_restriction).

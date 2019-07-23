@@ -96,11 +96,15 @@ has_model_property(X, tree_model, 2):- higher_logic(alcif_reg, X).
 % ---------------------
 % tbox is internalizable in alcoi and above
 % which means same bounds for all boxes
-has_lower_bound(X, T, B, P, I):- higher_logic(X, alcoi),
+internalizable(alcoi).
+internalizable(ulc).
+has_lower_bound(X, T, B, P, I):- higher_logic(X, Y),
+                              internalizable(Y),
                               has_lower_bound(X, T, _, P, I),
                               box_type(B).
 
-has_upper_bound(X, T, B, P, I):- higher_logic(X, alcoi),
+has_upper_bound(X, T, B, P, I):- higher_logic(X, Y),
+                   internalizable(Y),
                    has_upper_bound(X, T, _, P, I),
                    box_type(B).
 % ========================================
