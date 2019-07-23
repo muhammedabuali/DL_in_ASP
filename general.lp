@@ -35,6 +35,12 @@ has_lower_bound(X, a_box_consistency, B, P, 0):-
                    has_lower_bound(X, concept_satisfiability, B, P, _),
                    description_logic(X), box_type(B), lower_bound(P).
 
+% upper bound for concept sat is at most as big as the a box consistency
+has_upper_bound(X, concept_satisfiability, B, P, 0):-
+                   has_modeling_feature(X, conjunction),
+                   has_modeling_feature(X, concept_negation),
+                   has_upper_bound(X, a_box_consistency, B, P, _),
+                   description_logic(X), box_type(B), lower_bound(P).
 % ----- [2] --------
 % a higher tbox has same hardness at least as lower tbox
 % example hardness for acyclic tbox follows from without tbox case
@@ -46,6 +52,11 @@ has_lower_bound(X, T, B, P, higher_t_box):- has_lower_bound(X, T, B2, P, _), lar
 % example hardness for acyclic tbox follows from without tbox case
 has_upper_bound(X, T, B, P, lower_t_box):-
                    has_upper_bound(X, T, B2, P, _), larger_box(B2,B).
+
+% -----------------
+% A model property for larger box holds for smaller box
+has_model_property(X, T, B, I):- has_model_property(X, T, B2, I),
+                      larger_box(B2, B).
 
 % ----- [3] --------
 % an upper bound for higher logic implies same bound at most for lower logics
@@ -68,7 +79,15 @@ has_lower_bound(X, T, B, P, 30):- has_lower_bound(X, T, _, P, _),
 
 % ---- [6] ------
 % sublogics of si have fmp
-has_model_property(X, finite_model, 63):- higher_logic(si, X).
+has_model_property(X, finite_model, empty_t_box ,63):- higher_logic(si, X).
+
+%------------------
+% ---- sublogics of alcireg have fmp with any tbox
+has_model_property(X, finite_model, 34):- higher_logic(alci_reg, X).
+
+% ---- [6] ------
+% sublogics of sin have fmp
+has_model_property(X, finite_model, empty_t_box, 52):- higher_logic(sin, X).
 
 % ---- [6] ------
 % sublogics of alcif_reg have tmp

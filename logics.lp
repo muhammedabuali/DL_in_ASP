@@ -7,6 +7,9 @@ description_logic(alc;
                   alco;
                   ualc;
                   alci;
+                  alci_reg;
+                  alcf;
+                  alcif;
                   alcif_reg;
                   alcqi;
                   alcqo;
@@ -17,6 +20,7 @@ description_logic(alc;
                   alch;
                   r;
                   si;
+                  sin;
                   s).
 
 % define alc
@@ -31,6 +35,10 @@ has_modeling_feature(s,X):- has_modeling_feature(alc,X), modeling_feature(X).
 % define si
 has_modeling_feature(si, inverse_roles).
 has_modeling_feature(si,X):- has_modeling_feature(s,X), modeling_feature(X).
+
+% define sin
+has_modeling_feature(sin, unqualified_number_restriction).
+has_modeling_feature(sin,X):- has_modeling_feature(si,X), modeling_feature(X).
 
 % define shoq
 has_modeling_feature(shoq, ( transitive_roles; role_heirarchy )).
@@ -52,6 +60,10 @@ has_modeling_feature(r,X):- has_modeling_feature(alc,X), modeling_feature(X).
 has_modeling_feature(alco,nominals).
 has_modeling_feature(alco,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
+% define alcf
+has_modeling_feature(alcf, functionality).
+has_modeling_feature(alcf, X):- has_modeling_feature(alc,X), modeling_feature(X).
+
 % define ualc
 has_modeling_feature(ualc, least_fix_point_op).
 has_modeling_feature(ualc,X):- has_modeling_feature(alc,X), modeling_feature(X).
@@ -64,16 +76,20 @@ has_modeling_feature(alcq,X):- has_modeling_feature(alc,X), modeling_feature(X).
 has_modeling_feature(alci, inverse_roles).
 has_modeling_feature(alci,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
+% define alci_reg
+has_reg_features(alci_reg).
+has_modeling_feature(alci_reg,X):- has_modeling_feature(alci,X), modeling_feature(X).
+
 % define alcif
 has_modeling_feature(alcif, functionality).
 has_modeling_feature(alcif, X):- has_modeling_feature(alci,X), modeling_feature(X).
 
 
 % define alcif_reg
-has_modeling_featue(X, role_union):- has_reg_features(X).
-has_modeling_featue(X, role_chain):- has_reg_features(X).
-has_modeling_featue(X, reflexive_transitive_closure):- has_reg_features(X).
-has_modeling_featue(X, concept_identity):- has_reg_features(X).
+has_modeling_feature(X, role_union):- has_reg_features(X).
+has_modeling_feature(X, role_chain):- has_reg_features(X).
+has_modeling_feature(X, reflexive_transitive_closure):- has_reg_features(X).
+has_modeling_feature(X, concept_identity):- has_reg_features(X).
 has_reg_features(alcif_reg).
 has_modeling_feature(alcif_reg,X):- has_modeling_feature(alcif,X), modeling_feature(X).
 
