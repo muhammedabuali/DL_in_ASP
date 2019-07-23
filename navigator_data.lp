@@ -77,3 +77,7 @@ has_upper_bound(alcqi, concept_satisfiability, empty_t_box, p_space, 12).
 has_upper_bound(alcif, a_box_consistency, empty_t_box, p_space, 32).
 has_upper_bound(alcif, a_box_consistency, acyclic_t_box, p_space, 32).
 -has_model_property(alcif, finite_model, general_t_box, 2).
+
+% ALCIN
+has_upper_bound(alcin, a_box_consistency, acyclic_t_box, p_space, 32).
+-has_model_property(alcin, finite_model, general_t_box, 2).

@@ -11,6 +11,7 @@ description_logic(alc;
                   alcf;
                   alcif;
                   alcif_reg;
+                  alcin;
                   alcqi;
                   alcqo;
                   alcoi;
@@ -104,6 +105,10 @@ has_modeling_feature(alcoi,X):- has_modeling_feature(alc,X), modeling_feature(X)
 % define alcn
 has_modeling_feature(alcn, unqualified_number_restriction).
 has_modeling_feature(alcn,X):- has_modeling_feature(alc,X), modeling_feature(X).
+
+% define alcin
+has_modeling_feature(alcin, inverse_roles).
+has_modeling_feature(alcin,X):- has_modeling_feature(alcn,X), modeling_feature(X).
 
 % define alch
 has_modeling_feature(alch, role_heirarchy).
