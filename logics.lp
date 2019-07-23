@@ -13,7 +13,9 @@ description_logic(alc;
                   alcif_reg;
                   alcin;
                   alciq;
-                  alcqo;
+                  alcoq;
+                  alcon;
+                  alcof;
                   alcoi;
                   shiq;
                   shoq;
@@ -43,7 +45,7 @@ has_modeling_feature(sin,X):- has_modeling_feature(si,X), modeling_feature(X).
 
 % define shoq
 has_modeling_feature(shoq, ( transitive_roles; role_heirarchy )).
-has_modeling_feature(shoq,X):- has_modeling_feature(alcqo,X), modeling_feature(X).
+has_modeling_feature(shoq,X):- has_modeling_feature(alcoq,X), modeling_feature(X).
 
 % define shoi
 has_modeling_feature(shoi, ( transitive_roles; role_heirarchy )).
@@ -94,9 +96,9 @@ has_modeling_feature(X, concept_identity):- has_reg_features(X).
 has_reg_features(alcif_reg).
 has_modeling_feature(alcif_reg,X):- has_modeling_feature(alcif,X), modeling_feature(X).
 
-% define alcqo
-has_modeling_feature(alcqo, (qualified_number_restriction;nominals)).
-has_modeling_feature(alcqo,X):- has_modeling_feature(alc,X), modeling_feature(X).
+% define alcoq
+has_modeling_feature(alcoq, (qualified_number_restriction;nominals)).
+has_modeling_feature(alcoq,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
 % define alcoi
 has_modeling_feature(alcoi, (inverse_roles ;nominals)).
@@ -118,3 +120,10 @@ has_modeling_feature(alcn,X):- has_modeling_feature(alc,X), modeling_feature(X).
 has_modeling_feature(alciq, ( qualified_number_restriction;inverse_roles )).
 has_modeling_feature(alciq, X):- has_modeling_feature(alc,X), modeling_feature(X).
 
+% define alcon
+has_modeling_feature(alcon, ( unqualified_number_restriction;nominals )).
+has_modeling_feature(alcon, X):- has_modeling_feature(alc,X), modeling_feature(X).
+
+% define alcof
+has_modeling_feature(alcof, ( functionality;nominals )).
+has_modeling_feature(alcof, X):- has_modeling_feature(alc,X), modeling_feature(X).

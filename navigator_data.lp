@@ -24,7 +24,7 @@ has_lower_bound(alc, concept_satisfiability, empty_t_box, p_space, 80).
 
 % - acyclic TBOX
 has_upper_bound(alcq, concept_satisfiability, acyclic_t_box, p_space, 12).
-has_upper_bound(alcqo, a_box_consistency, acyclic_t_box, p_space, 17).
+has_upper_bound(alcoq, a_box_consistency, acyclic_t_box, p_space, 17).
 
 
 % - general TBOX
@@ -51,7 +51,7 @@ has_upper_bound(shiq, concept_satisfiability, general_t_box, exp_time, 33).
 % - model properties
 
 % - ALCO
-has_upper_bound(alcqo, concept_satisfiability, acyclic_t_box, p_space, 17).
+has_upper_bound(alcoq, concept_satisfiability, acyclic_t_box, p_space, 17).
 has_upper_bound(shoq, concept_satisfiability, general_t_box, exp_time, 0).
 has_upper_bound(alco, a_box_consistency, general_t_box, exp_time, 76).
 
@@ -88,3 +88,7 @@ has_upper_bound(alciq, a_box_consistency, acyclic_t_box, p_space, 32).
 
 % ALCOI
 has_upper_bound(shoi, a_box_consistency, general_t_box, exp_time, 33).
+
+% ALCOQ
+has_upper_bound(alcoq, a_box_consistency, empty_t_box, p_space, 76).
+has_upper_bound(alcoq, a_box_consistency, general_t_box, exp_time, 76).
