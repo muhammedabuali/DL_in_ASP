@@ -73,7 +73,7 @@ has_upper_bound(alci, a_box_consistency, acyclic_t_box, p_space, 32).
 % ALCF
 
 % ALCIF
-has_upper_bound(alcqi, concept_satisfiability, empty_t_box, p_space, 12).
+has_upper_bound(alciq, concept_satisfiability, empty_t_box, p_space, 12).
 has_upper_bound(alcif, a_box_consistency, empty_t_box, p_space, 32).
 has_upper_bound(alcif, a_box_consistency, acyclic_t_box, p_space, 32).
 -has_model_property(alcif, finite_model, general_t_box, 2).
@@ -81,3 +81,10 @@ has_upper_bound(alcif, a_box_consistency, acyclic_t_box, p_space, 32).
 % ALCIN
 has_upper_bound(alcin, a_box_consistency, acyclic_t_box, p_space, 32).
 -has_model_property(alcin, finite_model, general_t_box, 2).
+
+% AlCIQ
+has_upper_bound(alciq, a_box_consistency, acyclic_t_box, p_space, 32).
+-has_model_property(alciq, finite_model, general_t_box, 2).
+
+% ALCOI
+has_upper_bound(shoi, a_box_consistency, general_t_box, exp_time, 33).

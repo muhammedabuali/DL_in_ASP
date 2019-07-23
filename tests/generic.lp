@@ -1,6 +1,6 @@
 #include "general.lp".
 
-target(alcin).
+target(alcoi).
 
 upper_bound_cs_et(P):- target(X), has_lowest_upper_bound(X, concept_satisfiability, empty_t_box,P).
 lower_bound_cs_et(P):- target(X), has_highest_lower_bound(X, concept_satisfiability, empty_t_box,P).

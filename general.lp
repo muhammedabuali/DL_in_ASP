@@ -93,6 +93,16 @@ has_model_property(X, finite_model, empty_t_box, 52):- higher_logic(sin, X).
 % sublogics of alcif_reg have tmp
 has_model_property(X, tree_model, 2):- higher_logic(alcif_reg, X).
 
+% ---------------------
+% tbox is internalizable in alcoi and above
+% which means same bounds for all boxes
+has_lower_bound(X, T, B, P, I):- higher_logic(X, alcoi),
+                              has_lower_bound(X, T, _, P, I),
+                              box_type(B).
+
+has_upper_bound(X, T, B, P, I):- higher_logic(X, alcoi),
+                   has_upper_bound(X, T, _, P, I),
+                   box_type(B).
 % ========================================
 
 % Tests and questions
@@ -107,11 +117,11 @@ has_model_property(X, tree_model, 2):- higher_logic(alcif_reg, X).
 
 % emira questions
 
-% question 1: is alc dl contained in alcqi ?
+% question 1: is alc dl contained in alciq ?
 
-% alc_contained_in_alcqi:- higher_logic(alcqi,alc).
-% #show alc_contained_in_alcqi.
-% % alternatively: assume alcqi is a new dl called x
+% alc_contained_in_alciq:- higher_logic(alciq,alc).
+% #show alc_contained_in_alciq.
+% % alternatively: assume alciq is a new dl called x
 
 % description_logic(x).
 % has_modeling_feature(x,( atomic_concept;bottom_concept;
@@ -120,7 +130,7 @@ has_model_property(X, tree_model, 2):- higher_logic(alcif_reg, X).
 % inverse_roles;
 % top_concept;qualified_number_restriction )).
 
-% alc_contained_in_alcqi:- higher_logic(x,alc).
+% alc_contained_in_alciq:- higher_logic(x,alc).
 
 % question 3: which logics are less expressive than S
 
@@ -129,7 +139,7 @@ has_model_property(X, tree_model, 2):- higher_logic(alcif_reg, X).
 
 % test : has_highest_lower_bound
 % add more lower bounds and check the highest is selected
-% has_inferred_lower_bound(alcqi, concept_satisfiability, general_t_box, p_space).
+% has_inferred_lower_bound(alciq, concept_satisfiability, general_t_box, p_space).
 % #show has_highest_lower_bound/4.
 
 % test is_class_complete

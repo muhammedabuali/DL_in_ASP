@@ -12,7 +12,7 @@ description_logic(alc;
                   alcif;
                   alcif_reg;
                   alcin;
-                  alcqi;
+                  alciq;
                   alcqo;
                   alcoi;
                   shiq;
@@ -51,7 +51,7 @@ has_modeling_feature(shoi,X):- has_modeling_feature(alcoi,X), modeling_feature(X
 
 % define shiq
 has_modeling_feature(shiq, ( transitive_roles; role_heirarchy )).
-has_modeling_feature(shiq,X):- has_modeling_feature(alcqi,X), modeling_feature(X).
+has_modeling_feature(shiq,X):- has_modeling_feature(alciq,X), modeling_feature(X).
 
 % define r
 has_modeling_feature(r, ( transitive_roles; role_heirarchy; complex_role_inclusion )).
@@ -106,7 +106,7 @@ has_modeling_feature(alcoi,X):- has_modeling_feature(alc,X), modeling_feature(X)
 has_modeling_feature(alcn, unqualified_number_restriction).
 has_modeling_feature(alcn,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
-% define alcin
+% define alcinQi
 has_modeling_feature(alcin, inverse_roles).
 has_modeling_feature(alcin,X):- has_modeling_feature(alcn,X), modeling_feature(X).
 
@@ -114,7 +114,7 @@ has_modeling_feature(alcin,X):- has_modeling_feature(alcn,X), modeling_feature(X
 has_modeling_feature(alch, role_heirarchy).
 has_modeling_feature(alcn,X):- has_modeling_feature(alc,X), modeling_feature(X).
 
-% define alcqi
-has_modeling_feature(alcqi, ( qualified_number_restriction;inverse_roles )).
-has_modeling_feature(alcqi, X):- has_modeling_feature(alc,X), modeling_feature(X).
+% define alciq
+has_modeling_feature(alciq, ( qualified_number_restriction;inverse_roles )).
+has_modeling_feature(alciq, X):- has_modeling_feature(alc,X), modeling_feature(X).
 
