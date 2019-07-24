@@ -1,6 +1,6 @@
 #include "general.lp".
 
-target(alcoi).
+target(ualcoif).
 
 upper_bound_cs_et(P):- target(X), has_lowest_upper_bound(X, concept_satisfiability, empty_t_box,P).
 lower_bound_cs_et(P):- target(X), has_highest_lower_bound(X, concept_satisfiability, empty_t_box,P).
@@ -25,6 +25,7 @@ fin_model_gt:- target(X), has_model_property(X, finite_model, general_t_box, _).
 -fin_model_gt:- target(X), -has_model_property(X, finite_model, general_t_box, _).
 
 tree_model:- target(X), has_model_property(X, tree_model,_).
+-tree_model:- target(X), -has_model_property(X, tree_model,_).
 
 high(X):- target(Y), higher_logic(X, Y).
 
@@ -32,6 +33,7 @@ high(X):- target(Y), higher_logic(X, Y).
 
 #show fin_model/0.
 #show tree_model/0.
+#show -tree_model/0.
 
 #show.
 

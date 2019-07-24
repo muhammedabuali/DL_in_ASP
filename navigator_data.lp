@@ -115,3 +115,14 @@ has_upper_bound(ualcf, concept_satisfiability, empty_t_box, exp_time, 30).
 has_upper_bound(ualcn, concept_satisfiability, empty_t_box, exp_time, 30).
 % ualcq
 has_upper_bound(ualcq, concept_satisfiability, empty_t_box, exp_time, 30).
+%ualcif
+has_upper_bound(ualciq, concept_satisfiability, empty_t_box, exp_time, 24).
+%ualco
+has_upper_bound(ualcoi, concept_satisfiability, empty_t_box, exp_time, 75).
+has_upper_bound(ualco, a_box_consistency, empty_t_box, exp_time, 76).
+-has_model_property(ualco, tree_model, 75).
+%ualcof
+has_upper_bound(ualcoq, concept_satisfiability, empty_t_box, exp_time, 21).
+%ualcoif
+has_complexity(ualcoif, concept_satisfiability, empty_t_box, un_decidable, 20).
+-has_model_property(ualcoif, finite_model, 2).

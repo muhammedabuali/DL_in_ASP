@@ -7,23 +7,27 @@
 upper_bound(p_time;
   p_space;
   exp_time;
-  n_exp_time).
+  n_exp_time;
+  un_decidable).
 
 % relationship between classes
 lower_upper_bound(p_time , p_space).
 lower_upper_bound(p_space , exp_time).
 lower_upper_bound(exp_time, n_exp_time).
+lower_upper_bound(n_exp_time, un_decidable).
 
 % lower bounds
 lower_bound(p_time;
   p_space;
   exp_time;
-  n_exp_time
+  n_exp_time;
+  un_decidable
 ).
 
 higher_lower_bound( p_space , p_time).
 higher_lower_bound(exp_time ,p_space).
 higher_lower_bound(n_exp_time ,exp_time).
+higher_lower_bound(un_decidable ,n_exp_time).
 
 % complete classes
 
@@ -73,3 +77,8 @@ is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C, _),
                              has_upper_bound(X,T,B,C, _),
                              description_logic(X), reasoning_task(T),
                              box_type(B).
+has_lower_bound(X,T,B,C,I):-
+        has_complexity(X, T, B, C, I).
+
+has_upper_bound(X,T,B,C,I):-
+        has_complexity(X, T, B, C, I).

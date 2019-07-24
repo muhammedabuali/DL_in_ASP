@@ -94,6 +94,12 @@ has_model_property(X, finite_model, empty_t_box, 52):- higher_logic(sin, X).
 has_model_property(X, tree_model, 2):- higher_logic(alcif_reg, X).
 
 % ---------------------
+% in presence of nominals abox_consistency can be reduced to concept sat
+has_upper_bound(X, a_box_consistency, B, P, 76):-
+                   has_modeling_feature(X, nominals),
+                   has_upper_bound(X, concept_satisfiability, B, P, _),
+                   description_logic(X), box_type(B), lower_bound(P).
+% ---------------------
 % tbox is internalizable in alcoi and above
 % which means same bounds for all boxes
 internalizable(alcoi).

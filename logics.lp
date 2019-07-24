@@ -9,6 +9,14 @@ description_logic(alc;
                   ualcf;
                   ualcn;
                   ualcq;
+                  ualci;
+                  ualco;
+                  ualcof;
+                  ualcoq;
+                  ualcoi;
+                  ualcif;
+                  ualciq;
+                  ualcoif;
                   alci;
                   alci_reg;
                   alcf;
@@ -93,6 +101,38 @@ has_modeling_feature(ualcn,X):- has_modeling_feature(ualc,X), modeling_feature(X
 % define ualcq
 has_modeling_feature(ualcq, qualified_number_restriction).
 has_modeling_feature(ualcq,X):- has_modeling_feature(ualc,X), modeling_feature(X).
+
+% define ualci
+has_modeling_feature(ualci, inverse_roles).
+has_modeling_feature(ualci,X):- has_modeling_feature(ualc,X), modeling_feature(X).
+
+% define ualcif
+has_modeling_feature(ualcif, inverse_roles).
+has_modeling_feature(ualcif,X):- has_modeling_feature(ualcf,X), modeling_feature(X).
+
+% define ualcif
+has_modeling_feature(ualciq, inverse_roles).
+has_modeling_feature(ualciq,X):- has_modeling_feature(ualcq,X), modeling_feature(X).
+
+% define ualco
+has_modeling_feature(ualco, nominals).
+has_modeling_feature(ualco,X):- has_modeling_feature(ualc,X), modeling_feature(X).
+
+% define ualcof
+has_modeling_feature(ualcof, nominals).
+has_modeling_feature(ualcof,X):- has_modeling_feature(ualcf,X), modeling_feature(X).
+
+% define ualcoq
+has_modeling_feature(ualcoq, nominals).
+has_modeling_feature(ualcoq,X):- has_modeling_feature(ualcq,X), modeling_feature(X).
+
+% define ualcoi
+has_modeling_feature(ualcoi, nominals).
+has_modeling_feature(ualcoi,X):- has_modeling_feature(ualci,X), modeling_feature(X).
+
+% define ualcoif
+has_modeling_feature(ualcoif, nominals).
+has_modeling_feature(ualcoif,X):- has_modeling_feature(ualcif,X), modeling_feature(X).
 
 % define alcq
 has_modeling_feature(alcq, qualified_number_restriction).
