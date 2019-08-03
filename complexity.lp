@@ -85,3 +85,6 @@ has_complexity(alci, conjunctive_query_answering, B, exp_exp_time, 0):-
 % wrong data
 has_complexity(alci, finite_model_reasoning, B, exp_exp_time, 0):-
                      box_type(B).
+
+has_complexity(alci, conjunctive_query_data, B, co_n_p_time, 0):-
+box_type(B).

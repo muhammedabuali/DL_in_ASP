@@ -17,21 +17,56 @@ target_dl(X):- has_target_features(X), not -target_dl(X).
 % -- figure out the bounds
 
 cs_lb(P):- target_dl(X), has_lowest_upper_bound(X, concept_satisfiability, B, P), target_box(B).
+cs_lb_d(P):- target_dl(X), has_lowest_upper_bound(X, concept_satisfiability_data, B, P), target_box(B).
+
 cs_ub(P):- target_dl(X), has_highest_lower_bound(X, concept_satisfiability, B, P), target_box(B).
+cs_ub_d(P):- target_dl(X), has_highest_lower_bound(X, concept_satisfiability_data, B, P), target_box(B).
+
+cs_ub(P):- target_dl(X), has_highest_lower_bound(X, concept_satisfiability, B, P), target_box(B).
+cs_ub_d(P):- target_dl(X), has_highest_lower_bound(X, concept_satisfiability_data, B, P), target_box(B).
+
 ac_lb(P):- target_dl(X), has_lowest_upper_bound(X, a_box_consistency, B, P), target_box(B).
+ac_lb_d(P):- target_dl(X), has_lowest_upper_bound(X, a_box_consistency_data, B, P), target_box(B).
+
 ac_ub(P):- target_dl(X), has_highest_lower_bound(X, a_box_consistency, B, P), target_box(B).
+ac_ub_d(P):- target_dl(X), has_highest_lower_bound(X, a_box_consistency_data, B, P), target_box(B).
+
 cq_lb(P):- target_dl(X), has_highest_lower_bound(X, conjunctive_query_answering, B, P), target_box(B).
+cq_lb_d(P):- target_dl(X), has_highest_lower_bound(X, conjunctive_query_data, B, P), target_box(B).
+
 cq_ub(P):- target_dl(X), has_lowest_upper_bound(X, conjunctive_query_answering, B, P), target_box(B).
+cq_ub_d(P):- target_dl(X), has_lowest_upper_bound(X, conjunctive_query_data, B, P), target_box(B).
+
 fmr_lb(P):- target_dl(X), has_highest_lower_bound(X, finite_model_reasoning, B, P), target_box(B).
+fmr_lb_d(P):- target_dl(X), has_highest_lower_bound(X, finite_model_reasoning_data, B, P), target_box(B).
+
 fmr_ub(P):- target_dl(X), has_lowest_upper_bound(X, finite_model_reasoning, B, P), target_box(B).
+fmr_ub_d(P):- target_dl(X), has_lowest_upper_bound(X, finite_model_reasoning_data, B, P), target_box(B).
+
 #show cs_lb/1.
+#show cs_lb_d/1.
+
 #show cs_ub/1.
+#show cs_ub_d/1.
+
 #show ac_lb/1.
+#show ac_lb_d/1.
+
 #show ac_ub/1.
+#show ac_ub_d/1.
+
 #show cq_lb/1.
+#show cq_lb_d/1.
+
 #show cq_ub/1.
+#show cq_ub_d/1.
+
 #show fmr_lb/1.
+#show fmr_lb_d/1.
+
 #show fmr_ub/1.
+#show fmr_ub_d/1.
+
 
 % figure out the properties
 fin_model:- target_dl(X), has_model_property(X, finite_model, B, _), target_box(B).
