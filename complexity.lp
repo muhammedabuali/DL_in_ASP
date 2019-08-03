@@ -82,3 +82,6 @@ has_upper_bound(X,T,B,C,I):-
 has_complexity(alci, conjunctive_query_answering, B, exp_exp_time, 0):-
                      box_type(B).
 
+% wrong data
+has_complexity(alci, finite_model_reasoning, B, exp_exp_time, 0):-
+                     box_type(B).
