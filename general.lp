@@ -33,14 +33,14 @@ has_lower_bound(X, a_box_consistency, B, P, 0):-
                    has_modeling_feature(X, conjunction),
                    has_modeling_feature(X, concept_negation),
                    has_lower_bound(X, concept_satisfiability, B, P, _),
-                   description_logic(X), box_type(B), lower_bound(P).
+                   description_logic(X), box_type(B), complexity_class(P).
 
 % upper bound for concept sat is at most as big as the a box consistency
 has_upper_bound(X, concept_satisfiability, B, P, 0):-
                    has_modeling_feature(X, conjunction),
                    has_modeling_feature(X, concept_negation),
                    has_upper_bound(X, a_box_consistency, B, P, _),
-                   description_logic(X), box_type(B), lower_bound(P).
+                   description_logic(X), box_type(B), complexity_class(P).
 % ----- [2] --------
 % a higher tbox has same hardness at least as lower tbox
 % example hardness for acyclic tbox follows from without tbox case
@@ -98,7 +98,7 @@ has_model_property(X, tree_model, 2):- higher_logic(alcif_reg, X).
 has_upper_bound(X, a_box_consistency, B, P, 76):-
                    has_modeling_feature(X, nominals),
                    has_upper_bound(X, concept_satisfiability, B, P, _),
-                   description_logic(X), box_type(B), lower_bound(P).
+                   description_logic(X), box_type(B), complexity_class(P).
 % ---------------------
 % tbox is internalizable in alcoi and above
 % which means same bounds for all boxes
@@ -161,7 +161,7 @@ has_upper_bound(X, T, B, P, I):- higher_logic(X, Y),
 % has_complex(T,P):- has_lower_bound(alc, a_box_consistency, T, P, 0).
 % #show has_complex/2.
 
-% alc_lower_bound(T, B, P):- has_lower_bound(alc, T, B, P, _), reasoning_task(T), box_type(B), lower_bound(P).
+% alc_lower_bound(T, B, P):- has_lower_bound(alc, T, B, P, _), reasoning_task(T), box_type(B), complexity_class(P).
 % #show alc_lower_bound/3.
 
 % #show higher_logic/2.
