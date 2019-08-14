@@ -113,6 +113,8 @@ has_upper_bound(X, T, B, P, I):- higher_logic(X, Y),
                    internalizable(Y),
                    has_upper_bound(X, T, _, P, I),
                    box_type(B).
+% ----------------------------------
+
 % ========================================
 
 % Tests and questions
