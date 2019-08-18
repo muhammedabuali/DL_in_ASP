@@ -1,9 +1,8 @@
 #include "general.lp".
 target_feature(conjunction).
-target_box(empty_t_box).
 % this is the input for the file
 % target_feature(inverse_roles).
-% target_box(empty_t_box,)
+% target_box(empty_t_box).
 
 % -- figure out the DL
 
@@ -17,20 +16,35 @@ target_dl(X):- has_target_features(X), not -target_dl(X).
 
 % -- figure out the bounds
 
-cs_ub(P,I):- target_dl(X), has_lowest_upper_bound(X, concept_satisfiability, B, P), target_box(B),
-             has_upper_bound(X, concept_satisfiability, B, P, I).
+interesting_logic(H, P, T, 1):- has_lowest_upper_bound(H, T, B, P), target_box(B).
+interesting_logic(H, P, T, 0):- has_highest_lower_bound(H, T, B, P), target_box(B).
+-most_interesting_logic(H,P,T, 1):- interesting_logic(H, P, T, 1), interesting_logic(H2, P, T, 1), higher_logic(H2, H), H2 != H.
+
+-most_interesting_logic(H,P,T, 0):- interesting_logic(H, P, T, 0), interesting_logic(H2, P, T, 0), higher_logic(H, H2), H2 != H.
+most_interesting_logic(H,P,T, 1):- higher_logic(H, X), target_dl(X), interesting_logic(H, P, T, 1), not -most_interesting_logic(H, P, T, 1).
+most_interesting_logic(H,P,T, 0):- higher_logic(X, H), target_dl(X), interesting_logic(H, P, T, 0), not -most_interesting_logic(H, P, T, 0).
+
+cs_ub(P,I,H):- target_dl(X), has_lowest_upper_bound(X, concept_satisfiability, B, P), target_box(B),
+                has_upper_bound(X, concept_satisfiability, B, P, I),
+                most_interesting_logic(H, P, concept_satisfiability, 1).
+
+
 cs_ub_d(P):- target_dl(X), has_lowest_upper_bound(X, concept_satisfiability_data, B, P), target_box(B).
 
-cs_lb(P,I):- target_dl(X), has_highest_lower_bound(X, concept_satisfiability, B, P), target_box(B),
-           has_lower_bound(X, concept_satisfiability, B, P, I).
+cs_lb(P,I, L):- target_dl(X), has_highest_lower_bound(X, concept_satisfiability, B, P), target_box(B),
+           has_lower_bound(X, concept_satisfiability, B, P, I),
+           most_interesting_logic(L, P, concept_satisfiability, 0).
+
 cs_lb_d(P):- target_dl(X), has_highest_lower_bound(X, concept_satisfiability_data, B, P), target_box(B).
 
-ac_ub(P,I):- target_dl(X), has_lowest_upper_bound(X, a_box_consistency, B, P), target_box(B),
+ac_ub(P,I, H):- target_dl(X), has_lowest_upper_bound(X, a_box_consistency, B, P), target_box(B),
+             most_interesting_logic(H, P, a_box_consistency, 1),
              has_upper_bound(X, a_box_consistency, B, P, I).
 ac_ub_d(P):- target_dl(X), has_lowest_upper_bound(X, a_box_consistency_data, B, P), target_box(B).
 
-ac_lb(P,I):- target_dl(X), has_highest_lower_bound(X, a_box_consistency, B, P), target_box(B),
-           has_lower_bound(X, a_box_consistency, B, P, I).
+ac_lb(P,I, L):- target_dl(X), has_highest_lower_bound(X, a_box_consistency, B, P), target_box(B),
+             most_interesting_logic(L, P, a_box_consistency, 0),
+             has_lower_bound(X, a_box_consistency, B, P, I).
 ac_lb_d(P):- target_dl(X), has_highest_lower_bound(X, a_box_consistency_data, B, P), target_box(B).
 
 cq_ub(P):- target_dl(X), has_highest_lower_bound(X, conjunctive_query_answering, B, P), target_box(B).
@@ -45,16 +59,16 @@ fmr_ub_d(P):- target_dl(X), has_highest_lower_bound(X, finite_model_reasoning_da
 fmr_lb(P):- target_dl(X), has_lowest_upper_bound(X, finite_model_reasoning, B, P), target_box(B).
 fmr_lb_d(P):- target_dl(X), has_lowest_upper_bound(X, finite_model_reasoning_data, B, P), target_box(B).
 
-#show cs_lb/2.
+#show cs_lb/3.
 #show cs_lb_d/1.
 
-#show cs_ub/2.
+#show cs_ub/3.
 #show cs_ub_d/1.
 
-#show ac_lb/2.
+#show ac_lb/3.
 #show ac_lb_d/1.
 
-#show ac_ub/2.
+#show ac_ub/3.
 #show ac_ub_d/1.
 
 #show cq_lb/1.
