@@ -1,7 +1,7 @@
 import subprocess
 import os
 from subprocess import Popen, PIPE, STDOUT
-target = '../asp-logics/temp.lp'
+target = '../temp.lp'
 
 def run_query(params):
     input = params_to_input(params)
@@ -57,7 +57,7 @@ def parse_output(result):
 
 def gen_query(input):
     data = ""
-    with open('../asp-logics/query.lp') as f:
+    with open('../query.lp') as f:
         data = f.read()
         data += "\n".join(input)
     print(data)
