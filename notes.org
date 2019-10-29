@@ -34,8 +34,36 @@
 * June 2
   - add references as a separate predicate
   - add some general reductions
-* Action Tue 16
-  writing reports
-  upper bounds the same
+* June 16
+  writing reports 
+  more data
+  upper bounds the same  ✓
   add a gui
-  infer completeness
+* June 26
+  - wishlist:-
+    - conjunctive query answering as reasoning task not alot of data ✓
+    - finite model reasoning vs arbitrary ✓
+    - data and combinded complexity not alot of data ✓
+    - hardcoded logic names and dynamic logics/ not needed ✓ 
+      since the inference rules are defined in terms of features ✓
+    - link direct papers ✓
+    - highest logics with the same bound and lowest with same lower bound
+  - writing:
+    shortcoming of the navigator
+    insights of the implementation
+
+
+* fm, options:-
+**  higher arity
+*** own reasoning tasks
+**** own predicates
+  
+|                | repeated logic | re-writing |                  |
+| higher arity   |                |            |                  |
+| reasoning task | not at all     | not at all | ✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓ |
+| predicate      |                |            |                  |
+
+* data and combined complexity
+** OPTIONS
+   - NEW PREDICATES
+   - EXTRA TASK

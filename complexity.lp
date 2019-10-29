@@ -27,24 +27,23 @@ higher_lower_bound(un_decidable ,n_exp_time).
 
 % complete classes
 
--has_highest_lower_bound(X,T,B,C1):- has_lower_bound(X,T,B,C1, _),
-                                      has_lower_bound(X,T,B,D1, _),
+-has_highest_lower_bound(X,T,B,C1, F):- has_lower_bound(X,T,B,C1, _, F),
+                                      has_lower_bound(X,T,B,D1, _, F),
                                       higher_lower_bound(D1,C1), C1 != D1.
 
-has_highest_lower_bound(X,T,B,C1):- has_lower_bound(X,T,B,C1, _),
-                                    not -has_highest_lower_bound(X,T,B,C1),
+has_highest_lower_bound(X,T,B,C1, F):- has_lower_bound(X,T,B,C1, _, F),
+                                    not -has_highest_lower_bound(X,T,B,C1, F),
                                     description_logic(X), reasoning_task(T),
                                     box_type(B), complexity_class(C1).
 
--has_lowest_upper_bound(X,T,B,C1):- has_upper_bound(X,T,B,C1, _),
-                                     has_upper_bound(X,T,B,D1, _),
+-has_lowest_upper_bound(X,T,B,C1, F):- has_upper_bound(X,T,B,C1, _, F),
+                                     has_upper_bound(X,T,B,D1, _, F),
                                      lower_upper_bound(D1,C1), C1 != D1.
 
-has_lowest_upper_bound(X,T,B,C1):- has_upper_bound(X,T,B,C1, _),
-                                    not -has_lowest_upper_bound(X,T,B,C1),
+has_lowest_upper_bound(X,T,B,C1, F):- has_upper_bound(X,T,B,C1, _, F),
+                                    not -has_lowest_upper_bound(X,T,B,C1, F),
                                     description_logic(X), reasoning_task(T),
                                     box_type(B), complexity_class(C1).
-
 
 % partial order rules
 % reflexivity
@@ -69,14 +68,14 @@ higher_lower_bound(X,Z):- higher_lower_bound(X,Y), higher_lower_bound(Y,Z),
                           complexity_class(X), complexity_class(Y),
                           complexity_class(Z).
 
-is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C, _),
-                             has_upper_bound(X,T,B,C, _),
+is_class_complete(X,T,B,C):- has_lower_bound(X,T,B,C, _, F),
+                             has_upper_bound(X,T,B,C, _, F),
                              description_logic(X), reasoning_task(T),
                              box_type(B).
-has_lower_bound(X,T,B,C,I):-
+has_lower_bound(X,T,B,C,I, normal):-
         has_complexity(X, T, B, C, I).
 
-has_upper_bound(X,T,B,C,I):-
+has_upper_bound(X,T,B,C,I, normal):-
         has_complexity(X, T, B, C, I).
 
 has_complexity(alci, conjunctive_query_answering, B, exp_exp_time, 0):-
@@ -85,3 +84,15 @@ has_complexity(alci, conjunctive_query_answering, B, exp_exp_time, 0):-
 has_complexity(alci, conjunctive_query_data, B, co_n_p_time, 0):-
                      box_type(B).
 
+
+has_lower_bound(X, T, B, C, I, normal):- has_lower_bound(X,T,B,C, I).
+has_upper_bound(X, T, B, C, I, normal):- has_upper_bound(X,T,B,C, I).
+
+% a dl with fmp has the same bounds for normal reasoning and finite reasoning
+has_lower_bound(X, concept_satisfiability, B, C, I, finite):-
+                                           has_lower_bound(X, T, B, C, I, normal),
+                                          has_model_property(X, finite_model, _).
+
+has_upper_bound(X, concept_satisfiability, B, C, I, finite):-
+                                           has_upper_bound(X,T, B, C, I, normal),
+                                           has_model_property(X, finite_model, _).
