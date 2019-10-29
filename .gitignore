@@ -1,0 +1,3 @@
+gui/frontend/node_modules
+gui/venv
+gui/__pycache__/
