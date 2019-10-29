@@ -3,7 +3,7 @@ model_property(finite_model; tree_model).
 
 
 
-% inferences
+% adding box type as a dimension to decide the model property
 has_model_property(X, T, B, I):-
     has_model_property(X,T, I), description_logic(X), model_property(T),
     box_type(B).

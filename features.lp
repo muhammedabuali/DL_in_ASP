@@ -15,7 +15,7 @@ modeling_feature(atomic_concept;
   concept_identity
 ).
 
-% sub features
+% modeling sub features
 sub_modeling_feature(( nominals ; qualified_number_restriction;
                        functionality; unqualified_number_restriction;
                        least_fix_point_op),
@@ -25,6 +25,7 @@ sub_modeling_feature( functionality, unqualified_number_restriction).
 
 
 
+% define the sub_modeling_feature relationship
 % transitivity of submodeling feature
 sub_modeling_feature(X,Z):- sub_modeling_feature(X,Y),sub_modeling_feature(Y,Z).
 % a sub modeling feature is a modeling feature
